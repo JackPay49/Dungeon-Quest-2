@@ -1,0 +1,4 @@
+Blood-thirsty Blade
+2
+Swinging this cutlass through the air makes a shrill shrieking noise, not disimilar to someone screaming. As it slices through your enemies, the sword absorbs their blood. Strangely, you feel like it restores your own health too.
+This weapon will increase your health by 1 point for each kill up to your maximum health.

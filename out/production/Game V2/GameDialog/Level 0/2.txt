@@ -1,0 +1,2 @@
+Plain
+Chests can be unlocked by picking up silver keys. To interact with objects such as chests or keys you can press R when near to them or you can just walk over them.

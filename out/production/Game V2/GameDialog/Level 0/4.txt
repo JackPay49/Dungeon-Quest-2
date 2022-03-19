@@ -1,0 +1,2 @@
+Plain
+To attack you can press SPACE. Some enemies will drop a health potion to restore any health you have lost. To use a potion you must interact with it.

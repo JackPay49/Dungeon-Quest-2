@@ -1,0 +1,20 @@
+                GB.allDialog[0].DisplayContent();
+                DungeonQuest.ChangeJOptionPaneFontType("Plain");
+                number = JOptionPane.showConfirmDialog(null,"Drop all Relics into the fountain???","Sacrifice",JOptionPane.YES_NO_OPTION);
+                if (number == JOptionPane.YES_OPTION)
+                {
+                    GB.allDialog[1].DisplayContent();
+                    ChangeToAfterState();
+                    myPlayer.numberOfRelicsCollected = 0;
+                    myPlayer.myRelics = new Relic[0];
+                    Relic sixthRelic = new Relic(5,false);
+                    myPlayer.CollectNewRelic(sixthRelic);
+                    myPlayer.SetCurrentRelic(sixthRelic.relicNumber,GB);
+                    GB.allDialog[2].DisplayContent();
+                    ChangeAppearance(0);
+                }
+                else if (number == JOptionPane.NO_OPTION)
+                {
+                    GB.allDialog[3].DisplayContent();
+                    DungeonQuest.ChangeJOptionPaneFontType("Plain");
+                }

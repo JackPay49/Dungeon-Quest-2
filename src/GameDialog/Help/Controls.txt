@@ -1,0 +1,15 @@
+Plain
+W / ↑: Up
+A / ←: Left
+S / ↓: Down
+D / →: Right
+SPACE: Attack
+E: Open Inventory
+R: Interact with items
+F: Use currently selected Relic
+1: Use Relic 1
+2: Use Relic 2
+3: Use Relic 3
+4: Use Relic 4
+5: Use Relic 5
+6: Use Relic 6

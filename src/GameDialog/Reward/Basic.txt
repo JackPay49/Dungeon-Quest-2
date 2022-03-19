@@ -1,0 +1,2 @@
+Plain
+You got more points and your health has been fully restored!

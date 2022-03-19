@@ -1,0 +1,2 @@
+Plain
+Move around using the W, A, S and D keys. To open your inventory you can press E.
