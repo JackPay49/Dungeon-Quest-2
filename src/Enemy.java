@@ -105,9 +105,9 @@ public class Enemy extends Entity{
         int maxYPosition = GB.origin[1] + (GB.yDimension * 100);
         int minXPosition = GB.origin[0];
         int minYPosition = GB.origin[1];
-        for (int i=0;i < GB.numberOfUnavailableSpaces;i++)//unavailable spaces
+        for (int i=0;i < GB.unavailableSpaces.size();i++)//unavailable spaces
         {
-            if ((xPosition == GB.unavailableSpaces[i].getX()) & (yPosition == GB.unavailableSpaces[i].getY()))
+            if ((xPosition == GB.unavailableSpaces.get(i).getX()) & (yPosition == GB.unavailableSpaces.get(i).getY()))
             {
                 valid = false;
             }
@@ -133,11 +133,11 @@ public class Enemy extends Entity{
                 }
                 if (valid ==true)
                 {
-                    for (int i =0;i < GB.numberOfEnemies;i++)
+                    for (int i =0;i < GB.enemies.size();i++)
                     {
-                        if (GB.enemies[i] != null)
+                        if (GB.enemies.get(i) != null)
                         {
-                            if ((GB.enemies[i].icon.getX() == xPosition) & (GB.enemies[i].icon.getY() == yPosition))//other enemies
+                            if ((GB.enemies.get(i).icon.getX() == xPosition) & (GB.enemies.get(i).icon.getY() == yPosition))//other enemies
                             {
                                 valid = false;
                             }
@@ -154,11 +154,11 @@ public class Enemy extends Entity{
                 }
                 if (valid ==true)
                 {
-                    for (int i =0;i < GB.numberOfAllies;i++)
+                    for (int i =0;i < GB.allies.size();i++)
                     {
-                        if (GB.allies[i] != null)
+                        if (GB.allies.get(i) != null)
                         {
-                            if ((GB.allies[i].icon.getX() == xPosition) & (GB.allies[i].icon.getY() == yPosition) & (GB.allies[i].dead ==false ))//check not on an alive enemy
+                            if ((GB.allies.get(i).icon.getX() == xPosition) & (GB.allies.get(i).icon.getY() == yPosition) & (GB.allies.get(i).dead ==false ))//check not on an alive enemy
                             {
                                 valid = false;
                             }
@@ -170,9 +170,9 @@ public class Enemy extends Entity{
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfProjectilesCurrently;i++)
+            for (int i =0;i<GB.allProjectiles.size();i++)
             {
-                if ((xPosition == GB.allProjectiles[i].icon.getX()) & (yPosition == GB.allProjectiles[i].icon.getY()))
+                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()))
                 {
                     valid = false;
                 }
@@ -187,10 +187,10 @@ public class Enemy extends Entity{
         }
         if (valid == true)
         {
-            for (int i =0;i<GB.numberOfOtherEntities;i++)
+            for (int i =0;i<GB.otherEntities.size();i++)
             {
-                if (GB.otherEntities[i].dead == false) {
-                    if ((xPosition == GB.otherEntities[i].icon.getX()) & (yPosition == GB.otherEntities[i].icon.getY())) {
+                if (GB.otherEntities.get(i).dead == false) {
+                    if ((xPosition == GB.otherEntities.get(i).icon.getX()) & (yPosition == GB.otherEntities.get(i).icon.getY())) {
                         valid = false;
                     }
                 }
@@ -200,7 +200,7 @@ public class Enemy extends Entity{
         {
             for (int i =0;i<GB.numberOfInteractSpaces;i++)
             {
-                if ((xPosition == GB.allInteractSpaces[i].getX()) & (yPosition == GB.allInteractSpaces[i].getY()))
+                if ((xPosition == GB.allInteractSpaces.get(i).getX()) & (yPosition == GB.allInteractSpaces.get(i).getY()))
                 {
                     valid = false;
                 }
@@ -208,10 +208,10 @@ public class Enemy extends Entity{
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfOtherEntities;i++)
+            for (int i =0;i<GB.otherEntities.size();i++)
             {
-                if (GB.otherEntities[i].itemType.equals("Trap")) {
-                    if ((xPosition == GB.otherEntities[i].icon.getX()) & (yPosition == GB.otherEntities[i].icon.getY())) {
+                if (GB.otherEntities.get(i).itemType.equals("Trap")) {
+                    if ((xPosition == GB.otherEntities.get(i).icon.getX()) & (yPosition == GB.otherEntities.get(i).icon.getY())) {
                         valid = false;
                     }
                 }
@@ -227,9 +227,9 @@ public class Enemy extends Entity{
         int maxYPosition = GB.origin[1] + (GB.yDimension * 100);
         int minXPosition = GB.origin[0];
         int minYPosition = GB.origin[1];
-        for (int i=0;i < GB.numberOfUnavailableSpaces;i++)//unavailable spaces
+        for (int i=0;i < GB.unavailableSpaces.size();i++)//unavailable spaces
         {
-            if ((xPosition == GB.unavailableSpaces[i].getX()) & (yPosition == GB.unavailableSpaces[i].getY()))
+            if ((xPosition == GB.unavailableSpaces.get(i).getX()) & (yPosition == GB.unavailableSpaces.get(i).getY()))
             {
                 valid = false;
             }
@@ -244,11 +244,11 @@ public class Enemy extends Entity{
             {
                 if (valid ==true)
                 {
-                    for (int i =0;i < GB.numberOfEnemies;i++)
+                    for (int i =0;i < GB.enemies.size();i++)
                     {
-                        if (GB.enemies[i] != null)
+                        if (GB.enemies.get(i) != null)
                         {
-                            if ((GB.enemies[i].icon.getX() == xPosition) & (GB.enemies[i].icon.getY() == yPosition))//other enemies
+                            if ((GB.enemies.get(i).icon.getX() == xPosition) & (GB.enemies.get(i).icon.getY() == yPosition))//other enemies
                             {
                                 valid = false;
                             }
@@ -293,9 +293,9 @@ public class Enemy extends Entity{
 
         }
         tempPoint.setLocation(xPosition,yPosition);
-        for (int i = 0; i< GB.numberOfUnavailableSpaces;i++)//check if they're facing an unavailable space
+        for (int i = 0; i< GB.unavailableSpaces.size();i++)//check if they're facing an unavailable space
         {
-            if ((GB.unavailableSpaces[i].getX() == tempPoint.getX()) & (GB.unavailableSpaces[i].getY() ==tempPoint.getY()))
+            if ((GB.unavailableSpaces.get(i).getX() == tempPoint.getX()) & (GB.unavailableSpaces.get(i).getY() ==tempPoint.getY()))
             {
                 facingWall = true;
             }
@@ -379,10 +379,10 @@ public class Enemy extends Entity{
                         }
                     }
                 } else {
-                    if (GB.numberOfAllies == 0) {
+                    if (GB.allies.size() == 0) {
                         DoRandomMovement(GB);
                     } else {
-                        eValue = GB.allies[0];
+                        eValue = GB.allies.get(0);
                         canSeeEntity = CheckIfCanSeeEntity(eValue);
                         withinAttackZone = CheckIfEntityWithinAttackZone(eValue);
                         FaceEntity(eValue);
@@ -417,14 +417,14 @@ public class Enemy extends Entity{
     {
         Boolean withinAttackZone;
         Enemy enemiesInVision[] = new Enemy[0];
-        if (GB.numberOfEnemies > 0)
+        if (GB.enemies.size() > 0)
         {
-            for (int i=0;i<GB.numberOfEnemies;i++)
+            for (int i=0;i<GB.enemies.size();i++)
             {
-                FaceEntity(GB.enemies[i]);
-                if (CheckIfCanSeeEntity(GB.enemies[i]))
+                FaceEntity(GB.enemies.get(i));
+                if (CheckIfCanSeeEntity(GB.enemies.get(i)))
                 {
-                    enemiesInVision = DungeonQuest.AddEnemyToArray(enemiesInVision,GB.enemies[i]);
+                    enemiesInVision = DungeonQuest.AddEnemyToArray(enemiesInVision,GB.enemies.get(i));
                 }
             }
             if (enemiesInVision.length > 0)
@@ -470,7 +470,7 @@ public class Enemy extends Entity{
         {
             enemyNumberLimit = 6;
         }
-        if (GB.numberOfEnemies < enemyNumberLimit) {
+        if (GB.enemies.size() < enemyNumberLimit) {
             Enemy newEnemy = new Enemy(GB, GB.difficultyLevel);
             newEnemy.ChangeAppearance(6);
             if (facing.equals("Right")) {
@@ -483,8 +483,7 @@ public class Enemy extends Entity{
                 newEnemy.UpdateStatBarLocations();
             }
             ChangeAppearance(6);
-            GB.enemies = DungeonQuest.AddEnemyToArray(GB.enemies, newEnemy);
-            GB.numberOfEnemies++;
+            GB.enemies.add(newEnemy);
         }
     }
     public void AttackEntity(Entity eValue)

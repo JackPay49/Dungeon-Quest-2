@@ -117,26 +117,24 @@ public class Arbiter extends Boss {
         int numberOfMoreEnemies = -1;
         Enemy newEnemy = null;
         Boss newBoss =  null;
-        if (GB.numberOfEnemies < 5)
+        if (GB.enemies.size() < 5)
         {
             ChangeAppearance(6);
             randomNumber = r.nextInt(5);
             r = new Random();
             if (randomNumber < 4) {
-                numberOfMoreEnemies = ((r.nextInt(5 - GB.numberOfEnemies)) + 2);
+                numberOfMoreEnemies = ((r.nextInt(5 - GB.enemies.size())) + 2);
                 for (int i = 0; i < numberOfMoreEnemies; i++) {
                     newEnemy = new Enemy(GB, GB.difficultyLevel);
                     newEnemy.ChangeAppearance(6);
-                    GB.enemies = DungeonQuest.AddEnemyToArray(GB.enemies, newEnemy);
-                    GB.numberOfEnemies++;
+                    GB.enemies.add(newEnemy);
                 }
             }
             else if (randomNumber == 4)
             {
                 newBoss = new Boss(GB,GB.difficultyLevel);
                 newBoss.ChangeAppearance(0);//Chaqnge to 6
-                GB.enemies = DungeonQuest.AddEnemyToArray(GB.enemies, newBoss);
-                GB.numberOfEnemies++;
+                GB.enemies.add(newBoss);
 
             }
         }
@@ -200,8 +198,8 @@ public class Arbiter extends Boss {
                             }
                         }
                     } else {
-                        if (GB.numberOfAllies != 0) {
-                            eValue = GB.allies[0];
+                        if (GB.allies.size() != 0) {
+                            eValue = GB.allies.get(0);
                             canSeeEntity = CheckIfCanSeeEntity(eValue);
                             withinAttackZone = CheckIfEntityWithinAttackZone(eValue);
                             FaceEntity(eValue);

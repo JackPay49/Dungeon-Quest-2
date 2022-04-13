@@ -169,9 +169,9 @@ public class Item extends Entity{
             {
                 if (GB.type == 'f')
                 {
-                    for (int i =0;i<GB.numberOfOtherEntities;i++)
+                    for (int i =0;i<GB.otherEntities.size();i++)
                     {
-                        currentKey = (Item) GB.otherEntities[i];
+                        currentKey = (Item) GB.otherEntities.get(i);
                         if (currentKey.itemType.equals("Fountain"))
                         {
                             if (currentKey.dead == false)
@@ -183,9 +183,9 @@ public class Item extends Entity{
                 }
                 else if (GB.type == 'k')
                 {
-                    for (int i =0;i<GB.numberOfOtherEntities;i++)
+                    for (int i =0;i<GB.otherEntities.size();i++)
                     {
-                        currentKey = (Item) GB.otherEntities[i];
+                        currentKey = (Item) GB.otherEntities.get(i);
                         if (currentKey.itemType.equals("Key"))
                         {
                             if (currentKey.dead == false)
@@ -197,7 +197,7 @@ public class Item extends Entity{
                 }
                 else if ((GB.type == 'b')| (GB.type == 'e'))
                 {
-                    if (GB.numberOfEnemies <= 0)
+                    if (GB.enemies.size() <= 0)
                     {
                         collectedAllKeys = true;
                     }
@@ -210,9 +210,9 @@ public class Item extends Entity{
             }
             else if (itemType.equals("LockedChest"))
             {
-                for (int i =0;i<GB.numberOfOtherEntities;i++)
+                for (int i =0;i<GB.otherEntities.size();i++)
                 {
-                    currentKey = (Item) GB.otherEntities[i];
+                    currentKey = (Item) GB.otherEntities.get(i);
                     if (currentKey.itemType.equals("ChestKey"))
                     {
                         if (currentKey.dead == false)
@@ -244,7 +244,7 @@ public class Item extends Entity{
             else if (itemType.equals("Kingsoul"))
             {
                 myPlayer.SetKingsoul(true);
-                GB.allDialog[0].DisplayContent();
+                GB.allDialog.get(0).DisplayContent();
                 ChangeToAfterState();
             }
             else if (itemType.equals("Door"))

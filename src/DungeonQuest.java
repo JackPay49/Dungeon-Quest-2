@@ -103,28 +103,28 @@ public class DungeonQuest {
             GB.CheckAllProjectiles();
             GB.MoveAllProjectiles(myPlayer);
             GB.TrapActions(cycleNumber);
-            for (int i=0;i<GB.numberOfEnemies;i++)
+            for (int i=0;i<GB.enemies.size();i++)
             {
                 modi = i%2;
                 if (modi == modCycle)
                 {
                     if (allEntitiesFrozen == false)
                     {
-                        GB.enemies[i].DoEnemyCycle(myPlayer, GB);
+                        GB.enemies.get(i).DoEnemyCycle(myPlayer, GB);
                     }
                 }
                 else
                 {
                     if ((cycleNumber==5)|(cycleNumber==10))
                     {
-                        GB.enemies[i].ChangeAppearance(0);
+                        GB.enemies.get(i).ChangeAppearance(0);
                     }
                 }
             }
-            for (int i=0;i<GB.numberOfAllies;i++)
+            for (int i=0;i<GB.allies.size();i++)
             {
                 if (allEntitiesFrozen == false) {
-                    GB.allies[i].DoAllyCycle(GB);
+                    GB.allies.get(i).DoAllyCycle(GB);
                 }
             }
             modCycle =cycleNumber%5;
@@ -636,26 +636,6 @@ public class DungeonQuest {
         {
             return false;
         }
-    }
-    public static Relic[] AddRelicToArray(Relic[] array, Relic newItem)
-    {
-        Relic[] newArray = new Relic[array.length + 1];
-        for (int i =0;i < array.length;i++)
-        {
-            newArray[i] = array[i];
-        }
-        newArray[array.length] = newItem;
-        return newArray;
-    }
-    public static int[] AddIntToArray(int[] array, int newItem)
-    {
-        int[] newArray = new int[array.length + 1];
-        for (int i =0;i < array.length;i++)
-        {
-            newArray[i] = array[i];
-        }
-        newArray[array.length] = newItem;
-        return newArray;
     }
     public static Enemy[] AddEnemyToArray(Enemy[] array, Enemy newItem)
     {

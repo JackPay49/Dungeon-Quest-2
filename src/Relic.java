@@ -154,13 +154,13 @@ public class Relic extends  Tool{
     {
         int enemyIndex = -1;
         myPlayer.InteractAction(GB,false);
-        for (int i =0;i<GB.numberOfEnemies;i++)
+        for (int i =0;i<GB.enemies.size();i++)
         {
             for (int j =0 ; j< myPlayer.attackZone.length;j++)
             {
-                if ((myPlayer.attackZone[j].getX() == GB.enemies[i].icon.getX()) & (myPlayer.attackZone[j].getY() == GB.enemies[i].icon.getY()))
+                if ((myPlayer.attackZone[j].getX() == GB.enemies.get(i).icon.getX()) & (myPlayer.attackZone[j].getY() == GB.enemies.get(i).icon.getY()))
                 {
-                    if ((GB.enemies[i].type == 'e')|(GB.enemies[i].type == 'r')) {
+                    if ((GB.enemies.get(i).type == 'e')|(GB.enemies.get(i).type == 'r')) {
                         enemyIndex = i;
                     }
                     else
@@ -175,8 +175,8 @@ public class Relic extends  Tool{
             GB.MakeEnemyAlly(enemyIndex);
             if (relic6Collected)
             {
-                GB.allies[(GB.numberOfAllies -1)].damage++;
-                GB.allies[(GB.numberOfAllies -1)].IncreaseHealth();
+                GB.allies.get((GB.allies.size() -1)).damage++;
+                GB.allies.get((GB.allies.size() -1)).IncreaseHealth();
             }
             DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         }
@@ -185,11 +185,11 @@ public class Relic extends  Tool{
     {
         DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         myPlayer.ChangeAppearance(6);
-        for (int i = 0;i<GB.numberOfEnemies;i++)
+        for (int i = 0;i<GB.enemies.size();i++)
         {
-            if (myPlayer.CheckIfAroundEntity(GB.enemies[i]))
+            if (myPlayer.CheckIfAroundEntity(GB.enemies.get(i)))
             {
-                GB.enemies[i].StunEntity(true);
+                GB.enemies.get(i).StunEntity(true);
                 GB.HurtEnemy(i,1);
             }
 

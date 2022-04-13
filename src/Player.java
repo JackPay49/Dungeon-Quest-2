@@ -276,9 +276,9 @@ public class Player extends Entity {
         int maxYPosition = GB.origin[1] + (GB.yDimension * 100);
         int minXPosition = GB.origin[0];
         int minYPosition = GB.origin[1];
-        for (int i=0;i < GB.numberOfUnavailableSpaces;i++)
+        for (int i=0;i < GB.unavailableSpaces.size();i++)
         {
-            if ((xPosition == GB.unavailableSpaces[i].getX()) & (yPosition == GB.unavailableSpaces[i].getY()))
+            if ((xPosition == GB.unavailableSpaces.get(i).getX()) & (yPosition == GB.unavailableSpaces.get(i).getY()))
             {
                 valid = false;
             }
@@ -291,11 +291,11 @@ public class Player extends Entity {
             }
             if (valid ==true)
             {
-                for (int i =0;i < GB.numberOfEnemies;i++)
+                for (int i =0;i < GB.enemies.size();i++)
                 {
-                    if (GB.enemies[i] != null)
+                    if (GB.enemies.get(i) != null)
                     {
-                        if ((GB.enemies[i].icon.getX() == xPosition) & (GB.enemies[i].icon.getY() == yPosition) & (GB.enemies[i].dead ==false ))//check not on an alive enemy
+                        if ((GB.enemies.get(i).icon.getX() == xPosition) & (GB.enemies.get(i).icon.getY() == yPosition) & (GB.enemies.get(i).dead ==false ))//check not on an alive enemy
                         {
                             valid = false;
                         }
@@ -304,11 +304,11 @@ public class Player extends Entity {
             }
             if (valid ==true)
             {
-                for (int i =0;i < GB.numberOfAllies;i++)
+                for (int i =0;i < GB.allies.size();i++)
                 {
-                    if (GB.allies[i] != null)
+                    if (GB.allies.get(i) != null)
                     {
-                        if ((GB.allies[i].icon.getX() == xPosition) & (GB.allies[i].icon.getY() == yPosition) & (GB.allies[i].dead ==false ))//check not on an alive enemy
+                        if ((GB.allies.get(i).icon.getX() == xPosition) & (GB.allies.get(i).icon.getY() == yPosition) & (GB.allies.get(i).dead ==false ))//check not on an alive enemy
                         {
                             valid = false;
                         }
@@ -318,9 +318,9 @@ public class Player extends Entity {
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfProjectilesCurrently;i++)
+            for (int i =0;i<GB.allProjectiles.size();i++)
             {
-                if ((xPosition == GB.allProjectiles[i].icon.getX()) & (yPosition == GB.allProjectiles[i].icon.getY()))
+                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()))
                 {
                     valid = false;
                 }
@@ -328,10 +328,10 @@ public class Player extends Entity {
         }
         if (valid == true)
         {
-            for (int i =0;i<GB.numberOfOtherEntities;i++)
+            for (int i =0;i<GB.otherEntities.size();i++)
             {
-                if (((GB.otherEntities[i].dead == false) & ((GB.otherEntities[i].name.contains("Chest"))|(GB.otherEntities[i].name.equals("Brazier"))|(GB.otherEntities[i].name.equals("Kingsoul"))|(GB.otherEntities[i].itemType.equals("Trap"))))) {
-                    if ((xPosition == GB.otherEntities[i].icon.getX()) & (yPosition == GB.otherEntities[i].icon.getY())) {
+                if (((GB.otherEntities.get(i).dead == false) & ((GB.otherEntities.get(i).name.contains("Chest"))|(GB.otherEntities.get(i).name.equals("Brazier"))|(GB.otherEntities.get(i).name.equals("Kingsoul"))|(GB.otherEntities.get(i).itemType.equals("Trap"))))) {
+                    if ((xPosition == GB.otherEntities.get(i).icon.getX()) & (yPosition == GB.otherEntities.get(i).icon.getY())) {
                         valid = false;
                     }
                 }
@@ -341,7 +341,7 @@ public class Player extends Entity {
         {
             for (int i =0;i<GB.numberOfInteractSpaces;i++)
             {
-                if ((xPosition == GB.allInteractSpaces[i].getX()) & (yPosition == GB.allInteractSpaces[i].getY()))
+                if ((xPosition == GB.allInteractSpaces.get(i).getX()) & (yPosition == GB.allInteractSpaces.get(i).getY()))
                 {
                     valid = false;
                 }
@@ -591,13 +591,13 @@ public class Player extends Entity {
         entityIndex = GB.CheckForEnemies(this);
         if (entityIndex !=-1)
         {
-            entityType = GB.enemies[entityIndex].type;
-            enemyHealth = GB.enemies[entityIndex].health;
+            entityType = GB.enemies.get(entityIndex).type;
+            enemyHealth = GB.enemies.get(entityIndex).health;
             if (attackType.equals("Normal"))
             {
                 IncreaseEnergyLevel();
             }
-            if ((GB.enemies[entityIndex].health - damage) <= 0)
+            if ((GB.enemies.get(entityIndex).health - damage) <= 0)
             {
                 if (entityType =='e')
                 {
@@ -625,7 +625,7 @@ public class Player extends Entity {
             entityIndex = GB.CheckForOtherEntities(this);
             if (entityIndex !=-1)
             {
-                tempItem = (Item) GB.otherEntities[entityIndex];
+                tempItem = (Item) GB.otherEntities.get(entityIndex);
                 entityType = tempItem.type;
                 if ((entityType == 'i') & ((tempItem.itemType.equals("Chest"))|(tempItem.itemType.equals("Trap"))))
                 {
@@ -645,7 +645,7 @@ public class Player extends Entity {
                     entityIndex = GB.CheckForProjectiles(this);
                     if (entityIndex != -1)
                     {
-                        GB.allProjectiles[entityIndex].HurtProjectile();
+                        GB.allProjectiles.get(entityIndex).HurtProjectile();
                     }
                 }
             }
@@ -676,23 +676,23 @@ public class Player extends Entity {
         }
         if (itemInteractingWith == null)
         {
-            for (int i = 0; i < GB.numberOfOtherEntities; i++)
+            for (int i = 0; i < GB.otherEntities.size(); i++)
             {
                 for (int j = 0; j < attackZone.length; j++)
                 {
-                    if ((GB.otherEntities[i].icon.getX() == attackZone[j].getX()) & (GB.otherEntities[i].icon.getY() == attackZone[j].getY()))
+                    if ((GB.otherEntities.get(i).icon.getX() == attackZone[j].getX()) & (GB.otherEntities.get(i).icon.getY() == attackZone[j].getY()))
                     {
                         index = i;
                     }
                 }
-                if ((GB.otherEntities[i].icon.getX() == icon.getX()) & (GB.otherEntities[i].icon.getY() == icon.getY()))
+                if ((GB.otherEntities.get(i).icon.getX() == icon.getX()) & (GB.otherEntities.get(i).icon.getY() == icon.getY()))
                 {
                     index = i;
                 }
             }
             if (index != -1)
             {
-                itemInteractingWith = (Item) GB.otherEntities[index];
+                itemInteractingWith = (Item) GB.otherEntities.get(index);
             }
         }
         if (itemInteractingWith == null)
@@ -701,15 +701,15 @@ public class Player extends Entity {
             {
                 for (int j = 0; j < attackZone.length; j++)
                 {
-                    if ((GB.allInteractSpaces[i].getX() == attackZone[j].getX()) & (GB.allInteractSpaces[i].getY() == attackZone[j].getY()))
+                    if ((GB.allInteractSpaces.get(i).getX() == attackZone[j].getX()) & (GB.allInteractSpaces.get(i).getY() == attackZone[j].getY()))
                     {
-                        if (GB.exitTile == GB.allInteractSpaces[i].owner)
+                        if (GB.exitTile == GB.allInteractSpaces.get(i).owner)
                         {
                             index = -2;
                         }
                         else {
-                            for (int k = 0; k < GB.numberOfOtherEntities; k++) {
-                                if (GB.allInteractSpaces[i].owner == GB.otherEntities[k]) {
+                            for (int k = 0; k < GB.otherEntities.size(); k++) {
+                                if (GB.allInteractSpaces.get(i).owner == GB.otherEntities.get(k)) {
                                     index = k;
                                 }
                             }
@@ -724,7 +724,7 @@ public class Player extends Entity {
             }
             else if (index != -1)
             {
-                itemInteractingWith = (Item) GB.otherEntities[index];
+                itemInteractingWith = (Item) GB.otherEntities.get(index);
             }
 
         }

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GameBoard extends JFrame {
@@ -14,13 +15,11 @@ public class GameBoard extends JFrame {
     Item exitTile;
 
 
-    Point unavailableSpaces[];
-    int numberOfUnavailableSpaces;
+    ArrayList<Point> unavailableSpaces = new ArrayList<Point>();
 
     JLayeredPane pane = new JLayeredPane();
 
-    Projectile[] allProjectiles = new Projectile[0];
-    int numberOfProjectilesCurrently = 0;
+    ArrayList<Projectile> allProjectiles = new ArrayList<Projectile>();
 
     JLabel currentRelic;
 
@@ -30,8 +29,7 @@ public class GameBoard extends JFrame {
     Shield playerShield = new Shield(1);
 
 
-    Enemy deadEnemies[];
-    int numberOfDeadEnemies=0;
+    ArrayList<Enemy> deadEnemies = new ArrayList<Enemy>();
 
     int difficultyLevel;
     boolean won = false;
@@ -41,30 +39,25 @@ public class GameBoard extends JFrame {
     Point playerPosition = new Point();
     int levelNumber;
 
-    int numberOfEnemies;
     char type = 'e';//such as key level(k), enemy level(e), boss level(b), fountain level(f)
     String size;//this is to randomly decide how many enemies
-    Enemy enemies[];
-    Enemy allies[] = new Enemy[0];
-    int numberOfAllies;
+    ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    ArrayList<Enemy> allies = new ArrayList<Enemy>();
     int origin[] = new int[2];
     int width;
     int height;
     int xDimension;
     int yDimension;
 
-    int numberOfOtherEntities;//used to store the Key, exit tile, etc
-    Item otherEntities[];
+    ArrayList<Item> otherEntities = new ArrayList<Item>();//used to store the Key, exit tile, etc
 
-    GameDialog allDialog[];
-    int numberOfDialogs = 0;
+    ArrayList<GameDialog> allDialog = new ArrayList<GameDialog>();
     boolean storyDone = false;
 
-    int numberOfTakenPoints = 0;
-    Point allTakenPoints[] = new Point[numberOfDialogs];
+    ArrayList<Point> allTakenPoints = new ArrayList<Point>();
 
     int numberOfInteractSpaces = 0;
-    TakenPoint allInteractSpaces[] = new TakenPoint[numberOfDialogs];
+    ArrayList<TakenPoint> allInteractSpaces = new ArrayList<TakenPoint>();
 
 
 
@@ -164,7 +157,7 @@ public class GameBoard extends JFrame {
                 for (int i =0;i<randomNumber;i++)
                 {
                     Item key = new Item(this,"Key");
-                    AddOtherEntity(key);
+                    otherEntities.add(key);
                     key.ChangeAppearance(0);
                     key.RandomlyPlace(this);
                 }
@@ -174,12 +167,12 @@ public class GameBoard extends JFrame {
                 exitTile.dead = true;
                 exitTile.ChangeToAfterState();
                 Item chest = new Item(this,"LockedChest");
-                AddOtherEntity(chest);
+                otherEntities.add(chest);
                 chest.ChangeAppearance(0);
                 chest.SetLocation((origin[0] + (100 * (xDimension -1))),(origin[1] + (100 * (yDimension -1))));
 
                 Item chestKey = new Item(this,"ChestKey");
-                AddOtherEntity(chestKey);
+                otherEntities.add(chestKey);
                 chestKey.ChangeAppearance(0);
                 chestKey.RandomlyPlace(this);
             }
@@ -197,14 +190,14 @@ public class GameBoard extends JFrame {
             exitTile.SetLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * (yDimension -1))));
 
             Item idol = new Item(this,"Idol");
-            AddOtherEntity(idol);
+            otherEntities.add(idol);
             idol.ChangeAppearance(0);
 
             Item brazier1 = new Item(this,"Brazier");
-            AddOtherEntity(brazier1);
+            otherEntities.add(brazier1);
             brazier1.icon.setLocation(425,500);
             Item brazier2 = new Item(this,"Brazier");
-            AddOtherEntity(brazier2);
+            otherEntities.add(brazier2);
             brazier2.icon.setLocation(225,500);
         }
         else if (type == 'b')
@@ -214,7 +207,7 @@ public class GameBoard extends JFrame {
             LoadInBoardInfo(100);
             exitTile.SetLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * (yDimension -1))));
             Item chest = new Item(this,"Chest");
-            AddOtherEntity(chest);
+            otherEntities.add(new Item(this,"Chest"));
             chest.ChangeAppearance(0);
             chest.SetLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * 2)));
         }
@@ -280,6 +273,7 @@ public class GameBoard extends JFrame {
     public void GenerateEnemies()
     {
         Random r = new Random();
+        int numberOfEnemies = 0 ;
         int noeValue = 0;
         if (type == 'e' | type == 'k' | type == 'c')
         {
@@ -296,21 +290,19 @@ public class GameBoard extends JFrame {
                 numberOfEnemies = r.nextInt(4) + 5;
 
             }
-            enemies = new Enemy[numberOfEnemies];
             for (int i = 0;i < numberOfEnemies; i ++)
             {
                 Enemy newEnemy = new Enemy(this,difficultyLevel);
-                enemies[i] = newEnemy;
+                enemies.add(newEnemy);
             }
         }
         else if (type == 'i')
         {
             numberOfEnemies = 3;
-            enemies = new Enemy[numberOfEnemies];
             for (int i = 0;i<numberOfEnemies;i++)
             {
                 Boss newEnemy = new Boss(this,difficultyLevel);
-                enemies[i] = newEnemy;
+                enemies.add(newEnemy);
             }
         }
         else if (type =='b')
@@ -329,12 +321,10 @@ public class GameBoard extends JFrame {
                 noeValue = 3;
 
             }
-            enemies = new Enemy[0];
             for (int i=0;i<noeValue;i++)
             {
                 Boss bossEnemy = new Boss(this,difficultyLevel);
-                enemies = DungeonQuest.AddEnemyToArray(enemies,bossEnemy);
-                numberOfEnemies++;
+                enemies.add(bossEnemy);
             }
         }
 
@@ -343,7 +333,6 @@ public class GameBoard extends JFrame {
     {
         Random r = new Random();
         int numberOfTraps = 0;
-        Trap currentTrap;
         String trapType = "";
         int randomNumber;
         if (type == 'e' | type == 'k' | type == 'c')
@@ -372,9 +361,7 @@ public class GameBoard extends JFrame {
                 {
                     trapType = "ArrowWizard";
                 }
-
-                currentTrap = new Trap(this,trapType);
-                AddOtherEntity(currentTrap);
+                otherEntities.add(new Trap(this,trapType));
             }
 
         }
@@ -387,7 +374,9 @@ public class GameBoard extends JFrame {
     {
         String xPosition = "";
         String yPosition = "";
+        Point newPoint;
         int halfWayPoint =0;
+        int numberOfUnavailableSpaces,numberOfTakenPoints;
         String tempLine;
         BufferedReader br;
         try
@@ -417,7 +406,6 @@ public class GameBoard extends JFrame {
             xDimension = Integer.parseInt(br.readLine());
             yDimension = Integer.parseInt(br.readLine());
             numberOfUnavailableSpaces = Integer.parseInt(br.readLine());
-            unavailableSpaces = new Point[numberOfUnavailableSpaces];
             for (int i = 0;i < numberOfUnavailableSpaces;i++)
             {
                 xPosition = "";
@@ -441,12 +429,12 @@ public class GameBoard extends JFrame {
                 {
                     yPosition = yPosition + tempLine.charAt(j);
                 }
-                unavailableSpaces[i] = new Point();
-                unavailableSpaces[i].setLocation(Integer.parseInt(xPosition),Integer.parseInt(yPosition));
+                newPoint = new Point();
+                newPoint.setLocation(Integer.parseInt(xPosition),Integer.parseInt(yPosition));
+                unavailableSpaces.add(newPoint);
             }
 
             numberOfTakenPoints = Integer.parseInt(br.readLine());
-            allTakenPoints = new TakenPoint[numberOfTakenPoints];
             for (int i = 0;i < numberOfTakenPoints;i++) {
                 xPosition = "";
                 yPosition = "";
@@ -464,7 +452,7 @@ public class GameBoard extends JFrame {
                 for (int j = halfWayPoint; j < tempLine.length(); j++) {
                     yPosition = yPosition + tempLine.charAt(j);
                 }
-                allTakenPoints[i] = new TakenPoint(null,Integer.parseInt(xPosition),Integer.parseInt(yPosition));
+                allTakenPoints.add(new TakenPoint(null,Integer.parseInt(xPosition),Integer.parseInt(yPosition)));
             }
             br.close();
         }
@@ -483,10 +471,10 @@ public class GameBoard extends JFrame {
         {
             xPositionPlayer = (int) myPlayer.attackZone[j].getX();
             yPositionPlayer = (int) myPlayer.attackZone[j].getY();
-            for (int i =0; i < numberOfEnemies; i++)
+            for (int i =0; i < enemies.size(); i++)
             {
-                xPositionEnemy = enemies[i].icon.getX();
-                yPositionEnemy = enemies[i].icon.getY();
+                xPositionEnemy = enemies.get(i).icon.getX();
+                yPositionEnemy = enemies.get(i).icon.getY();
                 if ((xPositionPlayer == xPositionEnemy) & (yPositionPlayer == yPositionEnemy))
                 {
                     return i;
@@ -505,10 +493,10 @@ public class GameBoard extends JFrame {
         {
             xPositionPlayer = (int) myPlayer.attackZone[j].getX();
             yPositionPlayer = (int) myPlayer.attackZone[j].getY();
-            for (int i =0; i < numberOfOtherEntities; i++)
+            for (int i =0; i < otherEntities.size(); i++)
             {
-                xPositionEnemy = otherEntities[i].icon.getX();
-                yPositionEnemy = otherEntities[i].icon.getY();
+                xPositionEnemy = otherEntities.get(i).icon.getX();
+                yPositionEnemy = otherEntities.get(i).icon.getY();
                 if ((xPositionPlayer == xPositionEnemy) & (yPositionPlayer == yPositionEnemy))
                 {
                     return i;
@@ -527,10 +515,10 @@ public class GameBoard extends JFrame {
         {
             xPositionPlayer = (int) myPlayer.attackZone[j].getX();
             yPositionPlayer = (int) myPlayer.attackZone[j].getY();
-            for (int i =0; i < numberOfProjectilesCurrently; i++)
+            for (int i =0; i < allProjectiles.size(); i++)
             {
-                xPositionEnemy = allProjectiles[i].icon.getX();
-                yPositionEnemy = allProjectiles[i].icon.getY();
+                xPositionEnemy = allProjectiles.get(i).icon.getX();
+                yPositionEnemy = allProjectiles.get(i).icon.getY();
                 if ((xPositionPlayer == xPositionEnemy) & (yPositionPlayer == yPositionEnemy))
                 {
                     return i;
@@ -549,10 +537,10 @@ public class GameBoard extends JFrame {
         {
             xPositionPlayer = (int) myPlayer.attackZone[j].getX();
             yPositionPlayer = (int) myPlayer.attackZone[j].getY();
-            for (int i =0; i < numberOfAllies; i++)
+            for (int i =0; i < allies.size(); i++)
             {
-                xPositionEnemy = allies[i].icon.getX();
-                yPositionEnemy = allies[i].icon.getY();
+                xPositionEnemy = allies.get(i).icon.getX();
+                yPositionEnemy = allies.get(i).icon.getY();
                 if ((xPositionPlayer == xPositionEnemy) & (yPositionPlayer == yPositionEnemy))
                 {
                     return i;
@@ -563,25 +551,13 @@ public class GameBoard extends JFrame {
     }
     public void RemoveEnemy(int enemyNumber)//go from here, move each enemy down 1 place and then put it into a new array
     {
-        AddDeadEnemy(enemies[enemyNumber]);
-        if (enemies[enemyNumber].type == 'e')
+        Enemy enemyToRemove = enemies.get(enemyNumber);
+        if (enemyToRemove.type == 'e')
         {
-            DropRandomPotion(enemies[enemyNumber].icon.getLocation());
+            DropRandomPotion(enemyToRemove.icon.getLocation());
         }
-        deadEnemies = DungeonQuest.AddEnemyToArray(deadEnemies,enemies[enemyNumber]);
-        enemies = DungeonQuest.RemoveEnemyFromArray(enemies,enemies[enemyNumber]);
-        numberOfEnemies--;
-    }
-    public void RemoveAlly(int allyNumber)//go from here, move each enemy down 1 place and then put it into a new array
-    {
-        allies = DungeonQuest.RemoveEnemyFromArray(allies,allies[allyNumber]);
-        numberOfAllies--;
-
-    }
-    public void RemoveItem(int itemNumber)
-    {
-        otherEntities = DungeonQuest.RemoveItemFromArray(otherEntities,otherEntities[itemNumber]);
-        numberOfOtherEntities--;
+        deadEnemies.add(enemyToRemove);
+        enemies.remove(enemyToRemove);
     }
     public void DropRandomPotion(Point location)
     {
@@ -616,28 +592,16 @@ public class GameBoard extends JFrame {
 
         if (newPotion != null)
         {
-            AddOtherEntity(newPotion);
+            otherEntities.add((newPotion));
             newPotion.ChangeAppearance(0);
             newPotion.icon.setLocation(location);
         }
     }
-
-    public void AddDeadEnemy(Enemy eValue)
-    {
-        Enemy tempDeadEnemies[] = new Enemy[numberOfDeadEnemies + 1];
-        for (int i=0;i<numberOfDeadEnemies;i++)
-        {
-            tempDeadEnemies[i] = deadEnemies[i];
-        }
-        tempDeadEnemies[numberOfDeadEnemies] = eValue;
-        numberOfDeadEnemies++;
-        deadEnemies = tempDeadEnemies;
-    }
     public void EnsureDeadEnemiesHidden()
     {
-        for (int i=0;i< numberOfDeadEnemies;i++)
+        for (int i=0;i< deadEnemies.size();i++)
         {
-            deadEnemies[i].icon.setVisible(false);
+            deadEnemies.get(i).icon.setVisible(false);
         }
     }
     public void ChangeStateOfControls(boolean state,Entity eValue)
@@ -651,25 +615,14 @@ public class GameBoard extends JFrame {
             lbBackgroundImage.grabFocus();
         }
     }
-    public void AddProjectile(Projectile pValue)
-    {
-        Projectile[] newArray = new Projectile[numberOfProjectilesCurrently + 1];
-        for (int i =0;i < numberOfProjectilesCurrently;i++)
-        {
-            newArray[i] = allProjectiles[i];
-        }
-        newArray[numberOfProjectilesCurrently] = pValue;
-        allProjectiles = newArray;
-        numberOfProjectilesCurrently++;
-    }
     public void CheckAllProjectiles()
     {
         int i =0;
-        while ((allProjectiles.length != 0) & ( i < numberOfProjectilesCurrently))
+        while (i < allProjectiles.size())
         {
-            if (allProjectiles[i].dead == true)
+            if (allProjectiles.get(i).dead == true)
             {
-                RemoveProjectile(i);
+                allProjectiles.remove(i);
             }
             else
             {
@@ -679,66 +632,52 @@ public class GameBoard extends JFrame {
 
 
     }
-    public void RemoveProjectile(int index)
-    {
-        Projectile[] newArray = new Projectile[numberOfProjectilesCurrently -1];
-        for (int i =0; i< index;i++)
-        {
-            newArray[i] = allProjectiles[i];
-        }
-        for (int i = index +1;i < numberOfProjectilesCurrently;i++)
-        {
-            newArray[i -1] = allProjectiles[i];
-        }
-        allProjectiles[index].icon.setVisible(false);
-        allProjectiles = newArray;
-        numberOfProjectilesCurrently--;
-    }
     public void MoveAllProjectiles(Player myPlayer)
     {
-        for (int i =0;i < numberOfProjectilesCurrently;i++)
+        for (int i =0;i < allProjectiles.size();i++)
         {
-            allProjectiles[i].MoveEntity(this,myPlayer);
+            allProjectiles.get(i).MoveEntity(this,myPlayer);
         }
     }
     public void HurtEnemy(int enemyIndex,int amount)
     {
+        Enemy currentEnemy = enemies.get(enemyIndex);
         Arbiter tempArbiter;
-            if (enemies[enemyIndex].health < amount)
+            if (currentEnemy.health < amount)
             {
-                if (enemies[enemyIndex].name.equals("Arbiter"))
+                if (currentEnemy.name.equals("Arbiter"))
                 {
-                    tempArbiter = (Arbiter) enemies[enemyIndex];
-                    tempArbiter.EntityHurt(this, enemies[enemyIndex].health);
+                    tempArbiter = (Arbiter) currentEnemy;
+                    tempArbiter.EntityHurt(this, currentEnemy.health);
                 }
                 else
                 {
-                    enemies[enemyIndex].EntityHurt(enemies[enemyIndex].health);
+                    currentEnemy.EntityHurt(currentEnemy.health);
                 }
 
             } else
             {
-                if (enemies[enemyIndex].name.equals("Arbiter"))
+                if (currentEnemy.name.equals("Arbiter"))
                 {
-                    tempArbiter = (Arbiter) enemies[enemyIndex];
+                    tempArbiter = (Arbiter) currentEnemy;
                     tempArbiter.EntityHurt(this, amount);
                 }
                 else
                 {
-                    enemies[enemyIndex].EntityHurt(amount);
+                    currentEnemy.EntityHurt(amount);
                 }
 
             }
-            if (enemies[enemyIndex].dead == true)
+            if (currentEnemy.dead == true)
             {
                 RemoveEnemy(enemyIndex);
             }
     }
     public void HurtEnemy(Enemy eValue,int amount)
     {
-        for (int i=0;i<numberOfEnemies;i++)
+        for (int i=0;i<enemies.size();i++)
         {
-            if (enemies[i] == eValue)
+            if (enemies.get(i) == eValue)
             {
                 HurtEnemy(i,amount);
             }
@@ -747,51 +686,32 @@ public class GameBoard extends JFrame {
     }
     public void HurtAlly(int allyIndex,int amount)
     {
-        if (allies[allyIndex].health < amount) {
-            allies[allyIndex].EntityHurt(allies[allyIndex].health);
+        Enemy currentAlly = allies.get(allyIndex);
+        if (currentAlly.health < amount) {
+            currentAlly.EntityHurt(currentAlly.health);
         } else {
             for (int i = 0; i < amount; i++) {
-                allies[allyIndex].EntityHurt(1);
+                currentAlly.EntityHurt(1);
             }
         }
-        if (allies[allyIndex].dead == true) {
-            RemoveAlly(allyIndex);
-        }
-    }
-    public void HurtAlly(Enemy eValue,int amount)
-    {
-        for (int i=0;i<numberOfEnemies;i++)
-        {
-            if (enemies[i] == eValue)
-            {
-                HurtAlly(i,amount);
-            }
+        if (currentAlly.dead == true) {
+            allies.remove(currentAlly);
         }
     }
 
     public void HurtItem(int itemIndex,int amount)
     {
-        if (otherEntities[itemIndex].health < amount) {
-            otherEntities[itemIndex].EntityHurt(otherEntities[itemIndex].health);
+        Item currentItem = otherEntities.get(itemIndex);
+        if (currentItem.health < amount) {
+            currentItem.EntityHurt(currentItem.health);
         } else {
             for (int i = 0; i < amount; i++) {
-                otherEntities[itemIndex].EntityHurt(1);
+                currentItem.EntityHurt(1);
             }
         }
-        if (otherEntities[itemIndex].dead == true) {
-            RemoveItem(itemIndex);
+        if (currentItem.dead == true) {
+            otherEntities.remove(currentItem);
         }
-    }
-    public void HurtItem(Item iValue,int amount)
-    {
-        for (int i=0;i<numberOfOtherEntities;i++)
-        {
-            if (otherEntities[i] == iValue)
-            {
-                HurtItem(i,amount);
-            }
-        }
-
     }
     public void CheckIfWon(Player myPlayer)
     {
@@ -835,14 +755,14 @@ public class GameBoard extends JFrame {
         {
             if (type == 'e')
                 {
-                    if (numberOfEnemies <= 0)
+                    if (enemies.size() <= 0)
                     {
                         exitTile.ChangeToAfterState();
                     }
                 }
                 else if ((type == 'b')|(type == 'f'))
                 {
-                    if ((numberOfEnemies <= 0) & (numberOfOtherEntities <= 0))
+                    if ((enemies.size() <= 0) & (otherEntities.size() <= 0))
                     {
                         exitTile.ChangeToAfterState();
                     }
@@ -865,42 +785,30 @@ public class GameBoard extends JFrame {
             }
     }
 
-    public void AddOtherEntity(Item newEntity)
-    {
-        Item[] newArray = new Item[numberOfOtherEntities + 1];
-        for (int i =0;i<numberOfOtherEntities;i++)
-        {
-            newArray[i] = otherEntities[i];
-        }
-        newArray[numberOfOtherEntities] = newEntity;
-        numberOfOtherEntities++;
-        otherEntities = newArray;
-
-    }
     public void CheckOtherEntities(Player myPlayer)
     {
         int count = 0;
-        for (int i =0;i<numberOfOtherEntities;i++)
+        for (int i =0;i< otherEntities.size();i++)
         {
-            if (otherEntities[i].dead == false) {
-                if (otherEntities[i].type == 'i') {
-                    if ((otherEntities[i].itemType.equals("Key"))|(otherEntities[i].itemType.equals("ChestKey"))|(otherEntities[i].itemType.equals("Potion"))) {
-                        if ((playerPosition.getX() == otherEntities[i].icon.getX()) & (playerPosition.getY() == otherEntities[i].icon.getY())) {
+            if (otherEntities.get(i).dead == false) {
+                if (otherEntities.get(i).type == 'i') {
+                    if ((otherEntities.get(i).itemType.equals("Key"))|(otherEntities.get(i).itemType.equals("ChestKey"))|(otherEntities.get(i).itemType.equals("Potion"))) {
+                        if ((playerPosition.getX() == otherEntities.get(i).icon.getX()) & (playerPosition.getY() == otherEntities.get(i).icon.getY())) {
                             myPlayer.InteractAction(this,true);
                         }
                     }
                 }
             }
         }
-        while (count != numberOfOtherEntities)
+        while (count != otherEntities.size())
         {
-            if (otherEntities[count].dead == false)
+            if (otherEntities.get(count).dead == false)
             {
                 count++;
             }
             else
             {
-                RemoveItem(count);
+                otherEntities.remove(count);
             }
         }
 
@@ -927,19 +835,17 @@ public class GameBoard extends JFrame {
     }
     public void MakeEnemyAlly(int index)
     {
-        enemies[index].healthBar.ChangeColour("Purple");
-        allies = DungeonQuest.AddEnemyToArray(allies,enemies[index]);
-        numberOfAllies++;
-        enemies = DungeonQuest.RemoveEnemyFromArray(enemies,enemies[index]);
-        numberOfEnemies--;
+        Enemy currentEnemy =  enemies.get(index);
+        currentEnemy.healthBar.ChangeColour("Purple");
+        allies.add(currentEnemy);
+        enemies.remove(currentEnemy);
     }
     public void MakeAllyEnemy(int index)
     {
-        allies[index].healthBar.ChangeColour("Red");
-        enemies = DungeonQuest.AddEnemyToArray(enemies,allies[index]);
-        numberOfEnemies++;
-        allies = DungeonQuest.RemoveEnemyFromArray(allies,allies[index]);
-        numberOfAllies--;
+        Enemy currentAlly = allies.get(index);
+        currentAlly.healthBar.ChangeColour("Red");
+        enemies.add(currentAlly);
+        allies.remove((currentAlly));
     }
     public void SetUpLevel0()
     {
@@ -948,25 +854,23 @@ public class GameBoard extends JFrame {
         exitTile.icon.setLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * (yDimension -1))));
 
         Item key = new Item(this,"Key");
-        AddOtherEntity(key);
+        otherEntities.add(key);
         key.ChangeAppearance(0);
         key.SetLocation(525,100);
 
         Item chestKey = new Item(this,"ChestKey");
-        AddOtherEntity(chestKey);
+        otherEntities.add(chestKey);
         chestKey.ChangeAppearance(0);
         chestKey.SetLocation(25,500);
 
         Item chest = new Item(this,"LockedChest");
-        AddOtherEntity(chest);
+        otherEntities.add(chest);
         chest.ChangeAppearance(0);
         chest.SetLocation(325,800);
 
-        numberOfEnemies = 1;
-        enemies = new Enemy[numberOfEnemies];
-        enemies[0] = new Enemy(this,difficultyLevel);;
-        enemies[0].icon.setLocation(725,200);
-        enemies[0].UpdateStatBarLocations();
+        enemies.add(new Enemy(this,difficultyLevel));
+        enemies.get(0).icon.setLocation(725,200);
+        enemies.get(0).UpdateStatBarLocations();
         type = 'k';
         LoadLevelDialog();
 
@@ -975,14 +879,14 @@ public class GameBoard extends JFrame {
     }
     public void LoadLevelDialog()
     {
+        int numberOfDialogs;
         try
         {
             BufferedReader br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\GameDialog\\Level " + levelNumber + "\\Info.txt"));
             numberOfDialogs = Integer.parseInt(br.readLine());
-            allDialog = new GameDialog[numberOfDialogs];
             for (int i = 0;i<numberOfDialogs;i++)
             {
-                allDialog[i] = new GameDialog(("Level " + levelNumber),(i + 1) + "");
+                allDialog.add(new GameDialog(("Level " + levelNumber),(i + 1) + ""));
             }
         }
         catch(Exception exc)
@@ -997,7 +901,7 @@ public class GameBoard extends JFrame {
         exitTile.icon.setLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * (yDimension -1))));
 
         Item fountain = new Item(this,"Fountain");
-        AddOtherEntity(fountain);
+        otherEntities.add(fountain);
         fountain.ChangeAppearance(0);
         fountain.SetInteractSpaces(this);
 
@@ -1017,10 +921,10 @@ public class GameBoard extends JFrame {
         exitTile.icon.setVisible(true);
 
         Item brazier1 = new Item(this,"Brazier");
-        AddOtherEntity(brazier1);
+        otherEntities.add(brazier1);
         brazier1.icon.setLocation(525,500);
         Item brazier2 = new Item(this,"Brazier");
-        AddOtherEntity(brazier2);
+        otherEntities.add(brazier2);
         brazier2.icon.setLocation(1025,500);
 
         for (int i = 0;i<5;i++)
@@ -1028,7 +932,7 @@ public class GameBoard extends JFrame {
             newItem = new Item(this,"UnlockedChest");
             newItem.RandomlyPlace(this);
             newItem.ChangeAppearance(0);
-            AddOtherEntity(newItem);
+            otherEntities.add(newItem);
         }
         for (int i = 0;i<13;i++)
         {
@@ -1043,7 +947,7 @@ public class GameBoard extends JFrame {
             newPotion = new Potion(this,potionType);
             newPotion.RandomlyPlace(this);
             newPotion.ChangeAppearance(0);
-            AddOtherEntity(newPotion);
+            otherEntities.add(newPotion);
 
         }
 
@@ -1062,10 +966,8 @@ public class GameBoard extends JFrame {
         exitTile.icon.setLocation((origin[0] + ((xDimension-1) * 100)),(origin[1] + (100 * (yDimension-1))));
         exitTile.icon.setVisible(false);
 
-        numberOfEnemies = 1;
-        enemies = new Enemy[numberOfEnemies];
         Arbiter theArbiter = new Arbiter(this,difficultyLevel);
-        enemies[0] = theArbiter;
+        enemies.add(theArbiter);
         theArbiter.icon.setLocation(725,300);
         theArbiter.UpdateStatBarLocations();
 
@@ -1106,31 +1008,31 @@ public class GameBoard extends JFrame {
     }
     public void CheckStunnedEntities(Player myPlayer)
     {
-        for (int i =0;i<numberOfEnemies;i++)
+        for (int i =0;i<enemies.size();i++)
         {
-            if (enemies[i].stunned == true)
+            if (enemies.get(i).stunned == true)
             {
-                if (enemies[i].stunCount < 3)
+                if (enemies.get(i).stunCount < 3)
                 {
-                    enemies[i].stunCount++;
+                    enemies.get(i).stunCount++;
                 }
                 else
                 {
-                    enemies[i].StunEntity(false);
+                    enemies.get(i).StunEntity(false);
                 }
             }
         }
-        for (int i =0;i<numberOfAllies;i++)
+        for (int i =0;i<allies.size();i++)
         {
-            if (allies[i].stunned == true)
+            if (allies.get(i).stunned == true)
             {
-                if (allies[i].stunCount < 3)
+                if (allies.get(i).stunCount < 3)
                 {
-                    allies[i].stunCount++;
+                    allies.get(i).stunCount++;
                 }
                 else
                 {
-                    allies[i].StunEntity(false);
+                    allies.get(i).StunEntity(false);
                 }
             }
         }
@@ -1155,17 +1057,17 @@ public class GameBoard extends JFrame {
     {
          if ((playerPosition.getX() == origin[0] + (100 * 2)) & (playerPosition.getY() == (origin[1] + (100 * 3))))
         {
-            allDialog[0].DisplayContent();
+            allDialog.get(0).DisplayContent();
 
         }
         else if ((playerPosition.getX() == origin[0] + (100 * 4)) & (playerPosition.getY() == (origin[1] + (100 * 6))))
         {
-            allDialog[1].DisplayContent();
+            allDialog.get(1).DisplayContent();
 
         }
         else if ((playerPosition.getX() == origin[0] + (100 * 9)) & (playerPosition.getY() == (origin[1] + (100 * 5))))
         {
-            allDialog[2].DisplayContent();
+            allDialog.get(2).DisplayContent();
         }
         if (storyDone == false)
         {
@@ -1175,11 +1077,11 @@ public class GameBoard extends JFrame {
     }
     public void DoLevel60Cycle(Player myPlayer)
     {
-        for (int i = 0;i<numberOfOtherEntities;i++)
+        for (int i = 0;i<otherEntities.size();i++)
         {
-            if ((otherEntities[i].itemType.equals("Fountain")) & (myPlayer.myRelics.get(0).toolID == 5))
+            if ((otherEntities.get(i).itemType.equals("Fountain")) & (myPlayer.myRelics.get(0).toolID == 5))
             {
-                otherEntities[i].ChangeToAfterState();
+                otherEntities.get(i).ChangeToAfterState();
             }
         }
     }
@@ -1191,9 +1093,9 @@ public class GameBoard extends JFrame {
         boolean valid = true;
 
         int index = -1;
-        for (int i =0;i<numberOfEnemies;i++)
+        for (int i =0;i<enemies.size();i++)
         {
-            if (enemies[i].name.equals("Arbiter"))
+            if (enemies.get(i).name.equals("Arbiter"))
             {
                 arbiterDead = false;
                 index = i;
@@ -1205,20 +1107,19 @@ public class GameBoard extends JFrame {
             EnsureDeadEnemiesHidden();
         }
 
-        if (numberOfDialogs > 1)
+        if (allDialog.size() > 1)
         {
-           while (numberOfDialogs > 1)
+           while (allDialog.size() > 1)
            {
-               allDialog[0].DisplayContent();
-               allDialog = DungeonQuest.RemoveGameDialogFromArray(allDialog,allDialog[0]);
-               numberOfDialogs--;
+               allDialog.get(0).DisplayContent();
+               allDialog.remove(0);
            }
            DungeonQuest.ChangeJOptionPaneFontType("Plain");
-           for (int i = 0;i<numberOfEnemies;i++)
+           for (int i = 0;i<enemies.size();i++)
            {
-               if (enemies[i].name.equals("Arbiter"))
+               if (enemies.get(i).name.equals("Arbiter"))
                {
-                   tempArbiter = (Arbiter) enemies[i];
+                   tempArbiter = (Arbiter) enemies.get(i);
                    tempArbiter.SummonMoreEnemies(this);
                }
            }
@@ -1228,16 +1129,16 @@ public class GameBoard extends JFrame {
         {
             storyDone = true;
             DungeonQuest.FreezeAllEntities(14);
-            myPlayer.icon.setLocation((int) allTakenPoints[0].getX(),(int) allTakenPoints[0].getY());
+            myPlayer.icon.setLocation((int) allTakenPoints.get(0).getX(),(int) allTakenPoints.get(0).getY());
             myPlayer.UpdateStatBarLocations();
             CheckLevel120Spaces();
             backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel120Ending.gif"));
             lbBackgroundImage.setIcon(new ImageIcon(backgroundImage));
         }
 
-        for (int i =0;i<numberOfOtherEntities;i++)
+        for (int i =0;i<otherEntities.size();i++)
         {
-            if (otherEntities[i].itemType.equals("Kingsoul"))
+            if (otherEntities.get(i).itemType.equals("Kingsoul"))
             {
                 valid = false;
             }
@@ -1250,30 +1151,30 @@ public class GameBoard extends JFrame {
             backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel120.png"));
             lbBackgroundImage.setIcon(new ImageIcon(backgroundImage));
             Item kingsoul = new Item(this,"Kingsoul");
-            AddOtherEntity(kingsoul);
+            otherEntities.add(kingsoul);
         }
     }
     public void CheckLevel120Spaces()
     {
-        for (int j = 0;j< numberOfTakenPoints;j++) {
-            for (int i = 0; i < numberOfEnemies; i++) {
-                if ((enemies[i].icon.getX() == allTakenPoints[j].getX()) & (enemies[i].icon.getY() == allTakenPoints[j].getY()))
+        for (int j = 0;j< allTakenPoints.size();j++) {
+            for (int i = 0; i < enemies.size(); i++) {
+                if ((enemies.get(i).icon.getX() == allTakenPoints.get(j).getX()) & (enemies.get(i).icon.getY() == allTakenPoints.get(j).getY()))
                 {
-                    enemies[i].KillEntity();
-                    enemies[i].icon.setVisible(false);
+                    enemies.get(i).KillEntity();
+                    enemies.get(i).icon.setVisible(false);
                 }
             }
-            for (int i = 0; i < numberOfAllies; i++) {
-                if ((allies[i].icon.getX() == allTakenPoints[j].getX()) & (allies[i].icon.getY() == allTakenPoints[j].getY()))
+            for (int i = 0; i < allies.size(); i++) {
+                if ((allies.get(i).icon.getX() == allTakenPoints.get(j).getX()) & (allies.get(i).icon.getY() == allTakenPoints.get(j).getY()))
                 {
-                    allies[i].KillEntity();
-                    allies[i].icon.setVisible(false);
+                    allies.get(i).KillEntity();
+                    allies.get(i).icon.setVisible(false);
                 }
             }
-            for (int i = 0; i < numberOfOtherEntities; i++) {
-                if ((otherEntities[i].icon.getX() == allTakenPoints[j].getX()) & (otherEntities[i].icon.getY() == allTakenPoints[j].getY()))
+            for (int i = 0; i < otherEntities.size(); i++) {
+                if ((otherEntities.get(i).icon.getX() == allTakenPoints.get(j).getX()) & (otherEntities.get(i).icon.getY() == allTakenPoints.get(j).getY()))
                 {
-                    otherEntities[i].ChangeToAfterState();
+                    otherEntities.get(i).ChangeToAfterState();
 
                 }
             }
@@ -1281,16 +1182,16 @@ public class GameBoard extends JFrame {
     }
     public void KillAllEntities()
     {
-        while (numberOfEnemies > 0)
+        while (enemies.size() > 0)
         {
             HurtEnemy(0,50);
         }
-        while (numberOfOtherEntities > 0)
+        while (otherEntities.size() > 0)
         {
-            otherEntities[0].ChangeToAfterState();
-            RemoveItem(0);
+            otherEntities.get(0).ChangeToAfterState();
+            otherEntities.remove(0);
         }
-        while (numberOfAllies > 0)
+        while (allies.size() > 0)
         {
             HurtAlly(0,50);
         }
@@ -1300,13 +1201,13 @@ public class GameBoard extends JFrame {
         Trap currentTrap;
         int modCycle = cycleNumber%2;
         int modi;
-        for (int i = 0;i<numberOfOtherEntities;i++)
+        for (int i = 0;i<otherEntities.size();i++)
         {
-            if (otherEntities[i].itemType.equals("Trap"))
+            if (otherEntities.get(i).itemType.equals("Trap"))
             {
                 modi = i%2;
                 if (modCycle == modi) {
-                    currentTrap = (Trap) otherEntities[i];
+                    currentTrap = (Trap) otherEntities.get(i);
                     currentTrap.DoAction(this);
                 }
             }
@@ -1314,30 +1215,30 @@ public class GameBoard extends JFrame {
     }
     public void CheckPlayerLocation(Player myPlayer)
     {
-        for (int i =0; i < numberOfOtherEntities;i++)
+        for (int i =0; i < otherEntities.size();i++)
         {
-            if (otherEntities[i].nameLabel != null)
+            if (otherEntities.get(i).nameLabel != null)
             {
-                if (otherEntities[i].CheckIfAroundItem(myPlayer))
+                if (otherEntities.get(i).CheckIfAroundItem(myPlayer))
                 {
-                    otherEntities[i].nameLabel.setVisible(true);
+                    otherEntities.get(i).nameLabel.setVisible(true);
                 }
                 else
                 {
-                    otherEntities[i].nameLabel.setVisible(false);
+                    otherEntities.get(i).nameLabel.setVisible(false);
                 }
 
             }
-            if (otherEntities[i].interactLabel != null)
+            if (otherEntities.get(i).interactLabel != null)
             {
 
-                if (otherEntities[i].CheckIfAroundItem(myPlayer))
+                if (otherEntities.get(i).CheckIfAroundItem(myPlayer))
                 {
-                    otherEntities[i].interactLabel.setVisible(true);
+                    otherEntities.get(i).interactLabel.setVisible(true);
                 }
                 else
                 {
-                    otherEntities[i].interactLabel.setVisible(false);
+                    otherEntities.get(i).interactLabel.setVisible(false);
                 }
             }
         }

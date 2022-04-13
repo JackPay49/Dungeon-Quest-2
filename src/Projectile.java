@@ -17,7 +17,7 @@ public class Projectile extends Entity {
         name = ptValue;
         projectileType = ptValue;
         damage = dValue;
-        GB.AddProjectile(this);
+        GB.allProjectiles.add(this);
         ChangeAppearance(2);
         if (facing.equals("Right"))
         {
@@ -113,9 +113,9 @@ public class Projectile extends Entity {
         int maxYPosition = GB.origin[1] + ((GB.yDimension -1 )* 100);
         int minXPosition = GB.origin[0];
         int minYPosition = GB.origin[1];
-        for (int i=0;i < GB.numberOfUnavailableSpaces;i++)
+        for (int i=0;i < GB.unavailableSpaces.size();i++)
         {
-            if ((xPosition == GB.unavailableSpaces[i].getX()) & (yPosition == GB.unavailableSpaces[i].getY()))
+            if ((xPosition == GB.unavailableSpaces.get(i).getX()) & (yPosition == GB.unavailableSpaces.get(i).getY()))
             {
                 valid = false;
             }
@@ -138,9 +138,9 @@ public class Projectile extends Entity {
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfProjectilesCurrently;i++)
+            for (int i =0;i<GB.allProjectiles.size();i++)
             {
-                if ((xPosition == GB.allProjectiles[i].icon.getX()) & (yPosition == GB.allProjectiles[i].icon.getY()))
+                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()))
                 {
                     valid = false;
                 }
@@ -148,10 +148,10 @@ public class Projectile extends Entity {
         }
         if (valid == true)
         {
-            for (int i =0;i<GB.numberOfOtherEntities;i++)
+            for (int i =0;i<GB.otherEntities.size();i++)
             {
-                if (GB.otherEntities[i].dead == false) {
-                    if ((xPosition == GB.otherEntities[i].icon.getX()) & (yPosition == GB.otherEntities[i].icon.getY())) {
+                if (GB.otherEntities.get(i).dead == false) {
+                    if ((xPosition == GB.otherEntities.get(i).icon.getX()) & (yPosition == GB.otherEntities.get(i).icon.getY())) {
                         valid = false;
                     }
                 }
@@ -159,9 +159,9 @@ public class Projectile extends Entity {
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfTakenPoints;i++)
+            for (int i =0;i<GB.allTakenPoints.size();i++)
             {
-                if ((xPosition == GB.allTakenPoints[i].getX()) & (yPosition == GB.allTakenPoints[i].getY()))
+                if ((xPosition == GB.allTakenPoints.get(i).getX()) & (yPosition == GB.allTakenPoints.get(i).getY()))
                 {
                     valid = false;
                 }
@@ -220,11 +220,11 @@ public class Projectile extends Entity {
     {
         if ((owner.type =='p')|(owner.type == 'i'))
         {
-            for (int i=0;i<GB.numberOfEnemies;i++)
+            for (int i=0;i<GB.enemies.size();i++)
             {
-                if ((GB.enemies[i].icon.getY() == newPosition.getY()) & (GB.enemies[i].icon.getX() == newPosition.getX()))
+                if ((GB.enemies.get(i).icon.getY() == newPosition.getY()) & (GB.enemies.get(i).icon.getX() == newPosition.getX()))
                 {
-                    AttackEntity(GB,GB.enemies[i]);
+                    AttackEntity(GB,GB.enemies.get(i));
                 }
                 else
                 {

@@ -376,9 +376,9 @@ public class Entity
         int maxYPosition = GB.origin[1] + ((GB.yDimension -1 )* 100);
         int minXPosition = GB.origin[0];
         int minYPosition = GB.origin[1];
-        for (int i=0;i < GB.numberOfUnavailableSpaces;i++)
+        for (int i=0;i < GB.unavailableSpaces.size();i++)
         {
-            if ((xPosition == GB.unavailableSpaces[i].getX()) & (yPosition == GB.unavailableSpaces[i].getY()))
+            if ((xPosition == GB.unavailableSpaces.get(i).getX()) & (yPosition == GB.unavailableSpaces.get(i).getY()))
             {
                 valid = false;
             }
@@ -401,9 +401,9 @@ public class Entity
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfProjectilesCurrently;i++)
+            for (int i =0;i<GB.allProjectiles.size();i++)
             {
-                if ((xPosition == GB.allProjectiles[i].icon.getX()) & (yPosition == GB.allProjectiles[i].icon.getY()))
+                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()))
                 {
                     valid = false;
                 }
@@ -411,10 +411,10 @@ public class Entity
         }
         if (valid == true)
         {
-            for (int i =0;i<GB.numberOfOtherEntities;i++)
+            for (int i =0;i<GB.otherEntities.size();i++)
             {
-                if (GB.otherEntities[i].dead == false) {
-                    if ((xPosition == GB.otherEntities[i].icon.getX()) & (yPosition == GB.otherEntities[i].icon.getY())) {
+                if (GB.otherEntities.get(i).dead == false) {
+                    if ((xPosition == GB.otherEntities.get(i).icon.getX()) & (yPosition == GB.otherEntities.get(i).icon.getY())) {
                         valid = false;
                     }
                 }
@@ -422,9 +422,9 @@ public class Entity
         }
         if (valid ==true)
         {
-            for (int i =0;i<GB.numberOfTakenPoints;i++)
+            for (int i =0;i<GB.allTakenPoints.size();i++)
             {
-                if ((xPosition == GB.allTakenPoints[i].getX()) & (yPosition == GB.allTakenPoints[i].getY()))
+                if ((xPosition == GB.allTakenPoints.get(i).getX()) & (yPosition == GB.allTakenPoints.get(i).getY()))
                 {
                     valid = false;
                 }
@@ -570,9 +570,9 @@ public class Entity
         int count = 0;
         while(count < GB.numberOfInteractSpaces)
         {
-            if (GB.allInteractSpaces[count].owner == this)
+            if (GB.allInteractSpaces.get(count).owner == this)
             {
-                GB.allInteractSpaces = DungeonQuest.RemoveTakenPointFromArray(GB.allInteractSpaces,GB.allInteractSpaces[count]);
+                GB.allInteractSpaces.remove(GB.allInteractSpaces.get(count));
                 GB.numberOfInteractSpaces--;
             }
             else
@@ -586,7 +586,7 @@ public class Entity
             {
                 xPosition = this.icon.getX() + (j * 100);
                 yPosition = this.icon.getY() + (i * 100);
-                GB.allInteractSpaces = DungeonQuest.AddTakenPointToArray(GB.allInteractSpaces,(new TakenPoint(this,xPosition,yPosition)));
+                GB.allInteractSpaces.add((new TakenPoint(this,xPosition,yPosition)));
                 GB.numberOfInteractSpaces++;
             }
         }
