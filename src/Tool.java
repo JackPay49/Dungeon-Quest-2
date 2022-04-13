@@ -3,7 +3,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class Tool {
+public abstract class Tool {
     String name;
     String description;
     String action;

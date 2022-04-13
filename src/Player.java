@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -31,8 +32,9 @@ public class Player extends Entity {
     StatBar energy;
 
     Relic currentRelic;
-    Relic myRelics[];
-    int numberOfRelicsCollected = 0;
+    ArrayList<Relic> myRelics = new ArrayList<Relic>();
+//    Relic myRelics[];
+//    int myRelics.size() = 0;
 
     int invulnerableCount = 0;
     StatBar bubble;
@@ -74,7 +76,6 @@ public class Player extends Entity {
         score = 0;
         level =0;
         currentRelic = null;
-        numberOfRelicsCollected =0;
         fileNumber = fnValue;
         password = pValue;
         energyLevel = 0;
@@ -91,11 +92,11 @@ public class Player extends Entity {
             currentRelic.ChangeSelected(false);
 
         }
-        for (int i=0;i< numberOfRelicsCollected;i++)
+        for (int i=0;i< this.myRelics.size();i++)
         {
-            if (myRelics[i].toolID == relicNumber)
+            if (myRelics.get(i).toolID == relicNumber)
             {
-                currentRelic = myRelics[i];
+                currentRelic = myRelics.get(i);
                 currentRelic.ChangeSelected(true);
                 GB.SetCurrentRelicIcon(relicNumber,kingsoul);
             }
@@ -138,10 +139,10 @@ public class Player extends Entity {
             fw.write("\r\n");
             fw.write(health + "");
             fw.write("\r\n");
-            fw.write(numberOfRelicsCollected + "");
-            for (int i = 0; i < numberOfRelicsCollected; i++) {
+            fw.write(myRelics.size() + "");
+            for (int i = 0; i < myRelics.size(); i++) {
                 fw.write("\r\n");
-                fw.write(myRelics[i].toolID + "");
+                fw.write(myRelics.get(i).toolID + "");
             }
             fw.write("\r\n");
             if (currentRelic != null)
@@ -191,9 +192,9 @@ public class Player extends Entity {
     public void LoadPlayer(String nValue, int fnValue)
     {
         int currentRelicNumber =0;
+        int numRelics = 0;
         name = nValue;
         fileNumber = fnValue;
-        int tempEnergyLevel = 0;
         String kingsoulState;
         try
         {
@@ -213,11 +214,11 @@ public class Player extends Entity {
             }
             maxHealth = Integer.parseInt(br.readLine());
             health = Integer.parseInt(br.readLine());
-            numberOfRelicsCollected = Integer.parseInt(br.readLine());
-            myRelics = new Relic[numberOfRelicsCollected];
-            for (int i = 0; i < numberOfRelicsCollected; i++) {
+            numRelics = Integer.parseInt(br.readLine());
+            myRelics = new ArrayList<Relic>();
+            for (int i = 0; i < numRelics; i++) {
                 currentRelicNumber = Integer.parseInt(br.readLine());
-                myRelics[i] = new Relic(currentRelicNumber,kingsoul);
+                myRelics.add(new Relic(currentRelicNumber,kingsoul));
             }
             currentRelicNumber = Integer.parseInt(br.readLine());
             if (currentRelicNumber != -1)
@@ -251,19 +252,19 @@ public class Player extends Entity {
     public void CheckRelicCosts()
     {
         boolean relic6Collected = false;
-        for (int i =0 ;i <numberOfRelicsCollected;i++)
+        for (int i =0 ;i <myRelics.size();i++)
         {
-            if (myRelics[i].toolID == 5)
+            if (myRelics.get(i).toolID == 5)
             {
                 relic6Collected = true;
             }
         }
         if (relic6Collected == true)
         {
-            for (int i =0;i<numberOfRelicsCollected;i++)
+            for (int i =0;i<myRelics.size();i++)
             {
-                myRelics[i].cost = 3;
-                myRelics[i].relic6Collected = true;
+                myRelics.get(i).cost = 3;
+                myRelics.get(i).relic6Collected = true;
             }
         }
     }
@@ -446,11 +447,11 @@ public class Player extends Entity {
     }
     public Relic GetOneRelic(int relicNumber)
     {
-        for (int i =0;i < numberOfRelicsCollected; i ++)
+        for (int i =0;i < myRelics.size(); i ++)
         {
-            if (myRelics[i].toolID == relicNumber)
+            if (myRelics.get(i).toolID == relicNumber)
             {
-                return myRelics[i];
+                return myRelics.get(i);
             }
         }
         return null;
@@ -656,8 +657,7 @@ public class Player extends Entity {
     }
     public void CollectNewRelic(Relic newRelic)
     {
-        myRelics = DungeonQuest.AddRelicToArray(myRelics,newRelic);
-        numberOfRelicsCollected++;
+        myRelics.add(newRelic);
     }
     public void InteractAction(GameBoard GB,boolean countKeys)
     {
@@ -765,11 +765,11 @@ public class Player extends Entity {
         kingsoul = ksValue;
         if (ksValue)
         {
-            for (int i =0;i<numberOfRelicsCollected;i++)
+            for (int i =0;i<myRelics.size();i++)
             {
-                if (myRelics[i].toolID == 5)
+                if (myRelics.get(i).toolID == 5)
                 {
-                    myRelics[i] = new Relic(5,true);
+                    myRelics.set(i,new Relic(5,true));
                 }
             }
         }

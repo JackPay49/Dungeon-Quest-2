@@ -1177,7 +1177,7 @@ public class GameBoard extends JFrame {
     {
         for (int i = 0;i<numberOfOtherEntities;i++)
         {
-            if ((otherEntities[i].itemType.equals("Fountain")) & (myPlayer.myRelics[0].toolID == 5))
+            if ((otherEntities[i].itemType.equals("Fountain")) & (myPlayer.myRelics.get(0).toolID == 5))
             {
                 otherEntities[i].ChangeToAfterState();
             }

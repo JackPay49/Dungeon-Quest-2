@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CinematicScreen extends JFrame {
     private JPanel plMain;
@@ -49,7 +50,7 @@ public class CinematicScreen extends JFrame {
                 lbOtherIcon.setVisible(true);
                 relicNumber = Character.getNumericValue(tValue.charAt(tValue.length() - 1));
                 lbOtherIcon.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Cinematics\\Relic\\Icons\\" + relicNumber + ".png")));//Look into. The relicnumber is wrong
-                if (myPlayer.numberOfRelicsCollected == 0)
+                if (myPlayer.myRelics.size() == 0)
                 {
                     lbMain.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Cinematics\\Relic\\FirstRelic.gif")));
                 }
@@ -100,8 +101,7 @@ public class CinematicScreen extends JFrame {
                     lbMain.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Cinematics\\" + type + "\\2.gif")));
                     DisableButtons();
                     plMain.grabFocus();
-                    myPlayer.numberOfRelicsCollected = 0;
-                    myPlayer.myRelics = new Relic[0];
+                    myPlayer.myRelics = new ArrayList<Relic>();
                     Relic sixthRelic = new Relic(5,false);
                     myPlayer.CollectNewRelic(sixthRelic);
                     myPlayer.SetCurrentRelic(sixthRelic.toolID,GB);

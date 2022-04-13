@@ -249,7 +249,7 @@ public class Item extends Entity{
             }
             else if (itemType.equals("Door"))
             {
-                if (myPlayer.numberOfRelicsCollected == 6)
+                if (myPlayer.myRelics.size() == 6)
                 {
                     ChangeToAfterState();
                 }
@@ -288,13 +288,13 @@ public class Item extends Entity{
         int[] possibleRelicNumbers = {0,1,2,3,4};
         if (rewardType.equals("Relic"))
         {
-            if (myPlayer.numberOfRelicsCollected != 5)
+            if (myPlayer.myRelics.size() != 5)
             {
-                for (int i=0;i< myPlayer.numberOfRelicsCollected;i++)
+                for (int i=0;i< myPlayer.myRelics.size();i++)
                 {
                     for (int j=0; j < possibleRelicNumbers.length;j++)
                     {
-                        if (myPlayer.myRelics[i].toolID == possibleRelicNumbers[j])
+                        if (myPlayer.myRelics.get(i).toolID == possibleRelicNumbers[j])
                         {
                             possibleRelicNumbers = DungeonQuest.RemoveIntFromArray(possibleRelicNumbers,j);
                         }

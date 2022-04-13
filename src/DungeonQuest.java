@@ -327,7 +327,7 @@ public class DungeonQuest {
     {
         if (myPlayer.GetOneRelic(relicNumber) == null)
         {
-            DungeonQuest.PlaySound(DungeonQuest.directory + "\\Relic\\fail.wav");
+            DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\fail.wav");
         }
         else
         {

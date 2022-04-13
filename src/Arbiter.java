@@ -37,7 +37,7 @@ public class Arbiter extends Boss {
                 shield.setVisible(false);
                 shield = null;
                 ChangeAppearance(3);
-                DungeonQuest.PlaySound(DungeonQuest.directory + "\\Relic\\1Hit.wav");
+                DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\1Hit.wav");
             }
             else
             {

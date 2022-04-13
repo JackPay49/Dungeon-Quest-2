@@ -229,36 +229,37 @@ public class GameLogin extends JFrame {
     {
         ClearAllRadioButtons();
         int fileNumber = playerSave.fileNumber;
+        JTextField lvl,score,relic;
+        JRadioButton save;
         if (playerSave.password != null)
         {
-            if (fileNumber == 1)
+            switch (fileNumber)
             {
-                txtSave1Level.setText(playerSave.level + "");
-                txtSave1Score.setText(playerSave.score + "");
-                txtSave1Relic.setText(playerSave.numberOfRelicsCollected + "");
-                rdbSave1.setSelected(true);
-                rdbSave1.setEnabled(true);
+                case 1: lvl = txtSave1Level;
+                        score = txtSave1Score;
+                        relic = txtSave1Relic;
+                        save = rdbSave1;
+                        break;
+                case 2: lvl = txtSave2Level;
+                        score = txtSave2Score;
+                        relic = txtSave2Relic;
+                        save = rdbSave2;
+                        break;
+                case 3: lvl = txtSave3Level;
+                        score = txtSave3Score;
+                        relic = txtSave3Relic;
+                        save = rdbSave3;
+                        break;
+                default: lvl = null;
+                        score = null;
+                        relic = null;
+                        save = null;
             }
-            else if (fileNumber == 2)
-            {
-                txtSave2Level.setText(playerSave.level + "");
-                txtSave2Score.setText(playerSave.score + "");
-                txtSave2Relic.setText(playerSave.numberOfRelicsCollected + "");
-                rdbSave2.setSelected(true);
-                rdbSave2.setEnabled(true);
-
-
-            }
-            else if (fileNumber == 3)
-            {
-                txtSave3Level.setText(playerSave.level + "");
-                txtSave3Score.setText(playerSave.score + "");
-                txtSave3Relic.setText(playerSave.numberOfRelicsCollected + "");
-                rdbSave3.setSelected(true);
-                rdbSave3.setEnabled(true);
-
-
-            }
+            lvl.setText(playerSave.level + "");
+            score.setText(playerSave.score + "");
+            relic.setText(playerSave.myRelics.size() + "");
+            save.setSelected(true);
+            save.setEnabled(true);
         }
     }
     public void ChangeStateOfControls(boolean state)
