@@ -7,7 +7,6 @@ import java.io.FileReader;
 public class GameDialog extends JOptionPane {
     String type;
     String ID;
-    String directory = DungeonQuest.directory;
 
     int numberOfLines = 0;
     String content[] = new String[0];
@@ -27,7 +26,7 @@ public class GameDialog extends JOptionPane {
     public void LoadInContent()
     {
         String tempContent = "";
-        String filename = directory + "\\GameDialog\\" + type + "\\" + ID + ".txt";
+        String filename = DungeonQuest.directory + "\\GameDialog\\" + type + "\\" + ID + ".txt";
         boolean done = false;
         try
         {

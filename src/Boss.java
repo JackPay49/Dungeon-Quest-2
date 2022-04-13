@@ -102,7 +102,7 @@ public class Boss extends Enemy{
         if (numberOfSounds != 0)
         {
             randomNumber = r.nextInt(numberOfSounds) + 1;
-            audioFile = directory + entity + "\\" + enemyType + action + randomNumber + ".wav";
+            audioFile = DungeonQuest.directory + entity + "\\" + enemyType + action + randomNumber + ".wav";
             DungeonQuest.PlaySound(audioFile);
         }
     }

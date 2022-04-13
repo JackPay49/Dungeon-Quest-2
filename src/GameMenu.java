@@ -5,10 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 
 public class GameMenu extends JFrame {
-
-
-    static String directory = "C:\\Users\\jack\\Dropbox\\Jack's Stuff\\Leisure\\New Coding stuff\\Java Programs\\Game V2\\src";
-
     JLabel lbBackgroundImage = new JLabel();
     JLayeredPane pane = new JLayeredPane();
 
@@ -26,7 +22,7 @@ public class GameMenu extends JFrame {
         //Game Menu
         //--------------------------------------------------------------------------------------------------------------
         this.setTitle("Dungeon Quest");
-        Image gameIcon = Toolkit.getDefaultToolkit().getImage((directory + "\\OtherImages\\GameIcon.png"));
+        Image gameIcon = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\OtherImages\\GameIcon.png"));
         this.setIconImage(gameIcon);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setBounds(200,200,width,height);
@@ -45,7 +41,7 @@ public class GameMenu extends JFrame {
         pane.setBounds(0,0,width,height);
         pane.setVisible(true);
 
-        Image backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\OtherImages\\Menu Background.gif"));
+        Image backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\OtherImages\\Menu Background.gif"));
         lbBackgroundImage = new JLabel(new ImageIcon(backgroundImage));
         lbBackgroundImage.setBounds(0, 0, width, height);
         lbBackgroundImage.setVisible(true);

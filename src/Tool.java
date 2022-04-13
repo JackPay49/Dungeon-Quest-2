@@ -10,7 +10,6 @@ public class Tool {
     int toolID;
     Icon symbol;
     Icon selectedSymbol;
-    String directory = DungeonQuest.directory;
 
     char toolType;//w for sword, h for shield, r for relic
 
@@ -26,7 +25,7 @@ public class Tool {
         try
         {
             BufferedReader br;
-            br = new BufferedReader(new FileReader(directory + "\\Tool\\" + toolType + "\\" + toolID + ".txt"));
+            br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\Tool\\" + toolType + "\\" + toolID + ".txt"));
             name = br.readLine();
             description = br.readLine();
             action = br.readLine();
@@ -36,7 +35,7 @@ public class Tool {
         {
 
         }
-        symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(directory + "\\Tool\\" + toolType + "\\" + toolID + ".png"));
-        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(directory + "\\Tool\\" + toolType + "\\" + toolID + "Selected.png"));
+        symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\" + toolType + "\\" + toolID + ".png"));
+        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\" + toolType + "\\" + toolID + "Selected.png"));
     }
 }

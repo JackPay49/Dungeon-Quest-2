@@ -116,7 +116,7 @@ public class Player extends Entity {
     public void SavePlayer()
     {
         try {
-            FileWriter fw = new FileWriter(directory + "\\Players\\" + name + "-" + fileNumber + ".txt");
+            FileWriter fw = new FileWriter(DungeonQuest.directory + "\\Players\\" + name + "-" + fileNumber + ".txt");
             fw.write(name);
             fw.write("\r\n");
             fw.write(password + "");
@@ -197,7 +197,7 @@ public class Player extends Entity {
         String kingsoulState;
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(directory + "\\Players\\" + nValue + "-" + fileNumber + ".txt"));
+            BufferedReader br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\Players\\" + nValue + "-" + fileNumber + ".txt"));
             name = br.readLine();
             password = br.readLine();
             level = Integer.parseInt(br.readLine());
@@ -365,7 +365,7 @@ public class Player extends Entity {
                     bubble.setVisible(false);
                     bubble = null;
                     ChangeAppearance(3);
-                    DungeonQuest.PlaySound(directory + "\\Tool\\r\\1Hit.wav");
+                    DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\1Hit.wav");
                 }
                 else
                 {
@@ -538,7 +538,7 @@ public class Player extends Entity {
         {
             entityFacing = entityFacing + "Invulnerable";
         }
-        imageFile = directory + entity + action + entityFacing + ".gif";
+        imageFile = DungeonQuest.directory + entity + action + entityFacing + ".gif";
         tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
         tempIcon.getImage().flush();
         icon.setIcon(tempIcon);

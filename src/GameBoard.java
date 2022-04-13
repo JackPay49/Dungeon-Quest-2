@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.util.Random;
 
 public class GameBoard extends JFrame {
-
-    String directory = GameMenu.directory;
     JLabel lbBackgroundImage;
 
     Item exitTile;
@@ -75,7 +73,7 @@ public class GameBoard extends JFrame {
         //Gameboard
         //--------------------------------------------------------------------------------------------------------------
         this.setTitle("Game Board");
-        Image gameIcon = Toolkit.getDefaultToolkit().getImage((directory + "\\OtherImages\\GameIcon.png"));
+        Image gameIcon = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\OtherImages\\GameIcon.png"));
         this.setIconImage(gameIcon);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(750, 750);
@@ -135,7 +133,7 @@ public class GameBoard extends JFrame {
         }
         else
         {
-            currentRelic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(directory + "\\Tool\\r\\" + relicNumber + "Selected.png")));
+            currentRelic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\r\\" + relicNumber + "Selected.png")));
         }
     }
     public void SetCurrentSwordIcon(Sword sValue)
@@ -156,7 +154,7 @@ public class GameBoard extends JFrame {
         exitTile = new Item(this,"Exit");
         if ((type == 'e')|(type=='k')|(type=='c'))
         {
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\Board" + randomNumber + ".png"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\Board" + randomNumber + ".png"));
             lbBackgroundImage = new JLabel(new ImageIcon(backgroundImage));
             LoadInBoardInfo(randomNumber);
             if (type =='k')//now add the key[s]
@@ -192,7 +190,7 @@ public class GameBoard extends JFrame {
             exitTile.dead = true;
             exitTile.ChangeToAfterState();
 
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardIdol.png"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardIdol.png"));
             lbBackgroundImage = new JLabel(new ImageIcon(backgroundImage));
             LoadInBoardInfo(50);
 
@@ -211,7 +209,7 @@ public class GameBoard extends JFrame {
         }
         else if (type == 'b')
         {
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardBoss.png"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardBoss.png"));
             lbBackgroundImage = new JLabel(new ImageIcon(backgroundImage));
             LoadInBoardInfo(100);
             exitTile.SetLocation((origin[0] + ((xDimension -1) * 100)),(origin[1] + (100 * (yDimension -1))));
@@ -396,21 +394,21 @@ public class GameBoard extends JFrame {
         {
             if (number == 100)
             {
-                br = new BufferedReader(new FileReader(directory +"\\GameBoard\\BoardBoss.txt"));
+                br = new BufferedReader(new FileReader(DungeonQuest.directory +"\\GameBoard\\BoardBoss.txt"));
             }
             else if (number == 50)
             {
-                br = new BufferedReader(new FileReader(directory +"\\GameBoard\\BoardIdol.txt"));
+                br = new BufferedReader(new FileReader(DungeonQuest.directory +"\\GameBoard\\BoardIdol.txt"));
             }
             else
             {
                 if ((number == 0)|(number == 60)|(number == 120)|(number == 119))
                 {
-                    br = new BufferedReader(new FileReader(directory +"\\GameBoard\\BoardLevel" + number + ".txt"));
+                    br = new BufferedReader(new FileReader(DungeonQuest.directory +"\\GameBoard\\BoardLevel" + number + ".txt"));
                 }
                 else
                 {
-                    br = new BufferedReader(new FileReader(directory +"\\GameBoard\\Board" + number + ".txt"));
+                    br = new BufferedReader(new FileReader(DungeonQuest.directory +"\\GameBoard\\Board" + number + ".txt"));
                 }
             }
             width = Integer.parseInt(br.readLine());
@@ -979,7 +977,7 @@ public class GameBoard extends JFrame {
     {
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(directory + "\\GameDialog\\Level " + levelNumber + "\\Info.txt"));
+            BufferedReader br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\GameDialog\\Level " + levelNumber + "\\Info.txt"));
             numberOfDialogs = Integer.parseInt(br.readLine());
             allDialog = new GameDialog[numberOfDialogs];
             for (int i = 0;i<numberOfDialogs;i++)
@@ -1086,11 +1084,11 @@ public class GameBoard extends JFrame {
         Image backgroundImage;
         if (levelNumber !=60)
         {
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardLevel" + levelNumber + ".png"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel" + levelNumber + ".png"));
         }
         else
         {
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardLevel" + levelNumber + ".gif"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel" + levelNumber + ".gif"));
         }
         lbBackgroundImage = new JLabel(new ImageIcon(backgroundImage));
         LoadInBoardInfo(levelNumber);
@@ -1233,7 +1231,7 @@ public class GameBoard extends JFrame {
             myPlayer.icon.setLocation((int) allTakenPoints[0].getX(),(int) allTakenPoints[0].getY());
             myPlayer.UpdateStatBarLocations();
             CheckLevel120Spaces();
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardLevel120Ending.gif"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel120Ending.gif"));
             lbBackgroundImage.setIcon(new ImageIcon(backgroundImage));
         }
 
@@ -1249,7 +1247,7 @@ public class GameBoard extends JFrame {
         if ((arbiterDead) & (DungeonQuest.entitiesFrozenCount == 0) & (myPlayer.kingsoul == false) & (valid == true))
         {
             KillAllEntities();
-            backgroundImage = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BoardLevel120.png"));
+            backgroundImage = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BoardLevel120.png"));
             lbBackgroundImage.setIcon(new ImageIcon(backgroundImage));
             Item kingsoul = new Item(this,"Kingsoul");
             AddOtherEntity(kingsoul);

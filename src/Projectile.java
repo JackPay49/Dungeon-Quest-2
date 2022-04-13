@@ -73,7 +73,7 @@ public class Projectile extends Entity {
         {
             action = "\\Stunned";
         }
-        imageFile = directory + entity + "\\" + projectileType + action + entityFacing + ".gif";
+        imageFile = DungeonQuest.directory + entity + "\\" + projectileType + action + entityFacing + ".gif";
         tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
         tempIcon.getImage().flush();
         icon.setIcon(tempIcon);
@@ -319,7 +319,7 @@ public class Projectile extends Entity {
         if (numberOfSounds != 0)
         {
             randomNumber = r.nextInt(numberOfSounds) + 1;
-            audioFile = directory + entity + "\\" + projectileType + action + randomNumber + ".wav";
+            audioFile = DungeonQuest.directory + entity + "\\" + projectileType + action + randomNumber + ".wav";
             DungeonQuest.PlaySound(audioFile);
         }
     }

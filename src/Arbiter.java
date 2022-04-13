@@ -37,7 +37,7 @@ public class Arbiter extends Boss {
                 shield.setVisible(false);
                 shield = null;
                 ChangeAppearance(3);
-                DungeonQuest.PlaySound(directory + "\\Relic\\1Hit.wav");
+                DungeonQuest.PlaySound(DungeonQuest.directory + "\\Relic\\1Hit.wav");
             }
             else
             {
@@ -306,7 +306,7 @@ public class Arbiter extends Boss {
             if (invulnerableCount > 0) {
                 entityFacing = entityFacing + "Invulnerable";
             }
-            imageFile = directory + entity + "\\" + enemyType + action + entityFacing + ".gif";
+            imageFile = DungeonQuest.directory + entity + "\\" + enemyType + action + entityFacing + ".gif";
             tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
             tempIcon.getImage().flush();
             icon.setIcon(tempIcon);
@@ -382,7 +382,7 @@ public class Arbiter extends Boss {
         if (numberOfSounds != 0)
         {
             randomNumber = r.nextInt(numberOfSounds) + 1;
-            audioFile = directory + entity + "\\" + enemyType + action + randomNumber + ".wav";
+            audioFile = DungeonQuest.directory + entity + "\\" + enemyType + action + randomNumber + ".wav";
             DungeonQuest.PlaySound(audioFile);
         }
     }

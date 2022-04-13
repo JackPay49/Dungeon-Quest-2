@@ -13,7 +13,6 @@ import java.util.Set;
 
 public class Entity
 {
-    protected String directory = DungeonQuest.directory;
     String name;
     String entityID;
     char type;
@@ -161,7 +160,7 @@ public class Entity
             action = "\\Dying";
 
         }
-        imageFile = directory + entity + action + entityFacing + ".gif";
+        imageFile = DungeonQuest.directory + entity + action + entityFacing + ".gif";
         tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
         tempIcon.getImage().flush();
         icon.setIcon(tempIcon);
@@ -256,7 +255,7 @@ public class Entity
         if (numberOfSounds != 0)
         {
             randomNumber = r.nextInt(numberOfSounds) + 1;
-            audioFile = directory + entity + action + randomNumber + ".wav";
+            audioFile = DungeonQuest.directory + entity + action + randomNumber + ".wav";
             DungeonQuest.PlaySound(audioFile);
         }
     }
@@ -317,7 +316,7 @@ public class Entity
 
     public void CreateIcon(GameBoard GB)
     {
-        Image playerIcon = Toolkit.getDefaultToolkit().getImage((directory + "\\GameBoard\\BasicBoard.png"));
+        Image playerIcon = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BasicBoard.png"));
         JLabel tempLabel = new JLabel(new ImageIcon(playerIcon));
         icon = tempLabel;
         icon.setBounds(GB.origin[0],GB.origin[1], (100 * iconXDimension), (100 * iconYDimension));

@@ -227,8 +227,8 @@ public class PlayerMenu extends JFrame {
     public void DisplayHealth()
     {
         int health = myPlayer.health;
-        Icon heartFull = new ImageIcon(Toolkit.getDefaultToolkit().getImage(myPlayer.directory + "\\Heart\\Full.png"));
-        Icon heartEmpty = new ImageIcon(Toolkit.getDefaultToolkit().getImage(myPlayer.directory + "\\Heart\\Empty.png"));
+        Icon heartFull = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Heart\\Full.png"));
+        Icon heartEmpty = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Heart\\Empty.png"));
         JLabel[] healthPoints = {lbHealthPoint1,lbHealthPoint2,lbHealthPoint3,lbHealthPoint4,lbHealthPoint5,lbHealthPoint6,lbHealthPoint7};
         for (int i=0;i< myPlayer.maxHealth;i++)
         {
@@ -248,8 +248,8 @@ public class PlayerMenu extends JFrame {
     public void DisplayEnergyLevel()
     {
         int energy = myPlayer.energyLevel;
-        Icon energyFull = new ImageIcon(Toolkit.getDefaultToolkit().getImage(myPlayer.directory + "\\Energy\\Full.png"));
-        Icon energyEmpty = new ImageIcon(Toolkit.getDefaultToolkit().getImage(myPlayer.directory + "\\Energy\\Empty.png"));
+        Icon energyFull = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Energy\\Full.png"));
+        Icon energyEmpty = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Energy\\Empty.png"));
         JLabel[] energyPoints = {lbEnergyPoint1,lbEnergyPoint2,lbEnergyPoint3,lbEnergyPoint4,lbEnergyPoint5,lbEnergyPoint6};
         for (int i=0;i<myPlayer.maxEnergyLevel;i++)
         {

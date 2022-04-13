@@ -35,7 +35,7 @@ public class Trap extends Item{
         {
             action = "\\Action";
         }
-        imageFile = directory + entity + "\\" + itemType + "\\" + trapType + action + entityFacing + ".gif";
+        imageFile = DungeonQuest.directory + entity + "\\" + itemType + "\\" + trapType + action + entityFacing + ".gif";
         tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
         tempIcon.getImage().flush();
         icon.setIcon(tempIcon);

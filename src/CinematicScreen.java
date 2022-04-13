@@ -147,7 +147,7 @@ public class CinematicScreen extends JFrame {
         public void actionPerformed(ActionEvent e){
             myPlayer.ChangeAppearance(0);
             PlayerMenu PM = new PlayerMenu(myPlayer, GB);
-            DungeonQuest.PlaySound(GB.directory + "\\OtherSounds\\MenuOpen.wav");
+            DungeonQuest.PlaySound(DungeonQuest.directory + "\\OtherSounds\\MenuOpen.wav");
             Close();
         }
     }

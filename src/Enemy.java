@@ -90,7 +90,7 @@ public class Enemy extends Entity{
                     animationCount = 1;
                 }
             }
-            imageFile = directory + entity + "\\" + enemyType + action + entityFacing + ".gif";
+            imageFile = DungeonQuest.directory + entity + "\\" + enemyType + action + entityFacing + ".gif";
             tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
             tempIcon.getImage().flush();
             icon.setIcon(tempIcon);
@@ -705,7 +705,7 @@ public class Enemy extends Entity{
         int dValue = 0;
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(directory + "\\Enemy\\" + type + "\\" + enemyType  + "\\Info" + difficultyLevel + ".txt"));
+            BufferedReader br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\Enemy\\" + type + "\\" + enemyType  + "\\Info" + difficultyLevel + ".txt"));
             hValue = Integer.parseInt(br.readLine());
             dValue = Integer.parseInt(br.readLine());
         }

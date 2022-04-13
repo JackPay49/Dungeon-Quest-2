@@ -17,7 +17,7 @@ public class Sword extends Tool{
         try
         {
             BufferedReader br;
-            br = new BufferedReader(new FileReader(directory + "\\Tool\\w\\" + toolID + ".txt"));
+            br = new BufferedReader(new FileReader(DungeonQuest.directory + "\\Tool\\w\\" + toolID + ".txt"));
             name = br.readLine();
             damage = Integer.parseInt(br.readLine());
             description = br.readLine();
@@ -28,8 +28,8 @@ public class Sword extends Tool{
         {
 
         }
-        symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(directory + "\\Tool\\w\\" + toolID + ".png"));
-        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(directory + "\\Tool\\w\\" + toolID + "Selected.png"));
+        symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\w\\" + toolID + ".png"));
+        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\w\\" + toolID + "Selected.png"));
     }
     public void UseSword(Player myPlayer,boolean killedEnemy)
     {

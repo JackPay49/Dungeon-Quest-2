@@ -17,8 +17,8 @@ public class Relic extends  Tool{
         kingSoul = ksValue;
         if ((toolID == 5) & (kingSoul))
         {
-            symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + "Kingsoul.png")));
-            selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + "KingsoulSelected.png")));
+            symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + "Kingsoul.png")));
+            selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + "KingsoulSelected.png")));
         }
     }
     public void UseRelic(Player myPlayer, GameBoard GB)
@@ -55,22 +55,22 @@ public class Relic extends  Tool{
         {
             if ((toolID == 5) & (kingSoul))
             {
-                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + "KingsoulSelected.png")));
+                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + "KingsoulSelected.png")));
             }
             else
             {
-                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + "Selected.png")));
+                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + "Selected.png")));
             }
         }
         else
         {
             if ((toolID == 5) & (kingSoul))
             {
-                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + "Kingsoul.png")));
+                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + "Kingsoul.png")));
             }
             else
             {
-                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((directory + "\\Tool\\r\\" + toolID + ".png")));
+                symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".png")));
             }
         }
     }
@@ -84,7 +84,7 @@ public class Relic extends  Tool{
             {
                 myPlayer.IncreaseHealth();
             }
-            DungeonQuest.PlaySound(directory + "\\Tool\\r\\" + toolID + ".wav");
+            DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         }
         else
         {
@@ -119,7 +119,7 @@ public class Relic extends  Tool{
             myPlayer.invulnerableCount = shieldHealth;
             myPlayer.bubble = new StatBar(GB,myPlayer.icon.getLocation(),shieldHealth,shieldHealth,"Shield");
             myPlayer.ChangeAppearance(0);
-            DungeonQuest.PlaySound(directory + "\\Tool\\r\\" + toolID + ".wav");
+            DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         }
 
     }
@@ -178,12 +178,12 @@ public class Relic extends  Tool{
                 GB.allies[(GB.numberOfAllies -1)].damage++;
                 GB.allies[(GB.numberOfAllies -1)].IncreaseHealth();
             }
-            DungeonQuest.PlaySound(directory + "\\Tool\\r\\" + toolID + ".wav");
+            DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         }
     }
     public void RelicAction5(GameBoard GB,Player myPlayer)
     {
-        DungeonQuest.PlaySound(directory + "\\Tool\\r\\" + toolID + ".wav");
+        DungeonQuest.PlaySound(DungeonQuest.directory + "\\Tool\\r\\" + toolID + ".wav");
         myPlayer.ChangeAppearance(6);
         for (int i = 0;i<GB.numberOfEnemies;i++)
         {

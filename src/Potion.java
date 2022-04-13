@@ -27,7 +27,7 @@ public class Potion extends Item{
             action = "\\After";
 
         }
-        imageFile = directory + entity + "\\" + itemType + "\\" + potionType + action + entityFacing + ".gif";
+        imageFile = DungeonQuest.directory + entity + "\\" + itemType + "\\" + potionType + action + entityFacing + ".gif";
         tempIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(imageFile));
         tempIcon.getImage().flush();
         icon.setIcon(tempIcon);

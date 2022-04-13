@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -33,8 +34,8 @@ public class DungeonQuest {
 
     Action testAction;
 
-    static String directory = "C:\\Users\\jack\\Dropbox\\Jack's Stuff\\Leisure\\New Coding stuff\\Java Programs\\Game V2\\src";
-
+//    static String directory = "C:\\Users\\jack\\Dropbox\\Jack's Stuff\\Leisure\\New Coding stuff\\Java Programs\\Dungeon-Quest-2\\src";
+    static String directory = Path.of("").toAbsolutePath().toString() + "\\src";
 
     GameBoard GB;
     Player myPlayer;
@@ -226,7 +227,7 @@ public class DungeonQuest {
             ChangeStateOfGame(false);
             myPlayer.ChangeAppearance(0);
             PlayerMenu PM = new PlayerMenu(myPlayer, GB);
-            DungeonQuest.PlaySound(GB.directory + "\\OtherSounds\\MenuOpen.wav");
+            DungeonQuest.PlaySound(directory + "\\OtherSounds\\MenuOpen.wav");
         }
     }
     public class AttackAction extends AbstractAction {
