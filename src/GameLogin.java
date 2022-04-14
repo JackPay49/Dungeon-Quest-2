@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class GameLogin extends JFrame {
     private JPanel plTitle;
@@ -57,8 +58,8 @@ public class GameLogin extends JFrame {
     private JLabel lbSave3Relic;
     private JTextField txtSave3Relic;
 
-    Player playerSaves[] = new Player[0];
-    int numberOfPlayerSaves =0;
+    ArrayList<Player> playerSaves = new ArrayList<Player>();
+    int numberOfPlayerSaves;
 
     String username;
     String password;
@@ -137,15 +138,15 @@ public class GameLogin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (rdbSave1.isSelected())
                 {
-                    LoadGame(playerSaves[0]);
+                    LoadGame(playerSaves.get(0));
                 }
                 else if (rdbSave2.isSelected())
                 {
-                    LoadGame(playerSaves[1]);
+                    LoadGame(playerSaves.get(1));
                 }
                 else if (rdbSave3.isSelected())
                 {
-                    LoadGame(playerSaves[2]);
+                    LoadGame(playerSaves.get(2));
                 }
                 Close();
             }
@@ -190,7 +191,7 @@ public class GameLogin extends JFrame {
                 newPlayer = new Player(unValue,i + 1);
                 if (newPlayer.password != null)
                 {
-                    playerSaves = DungeonQuest.AddPlayerToArray(playerSaves,newPlayer);
+                    playerSaves.add(newPlayer);
                     numberOfPlayerSaves ++;
                     if (i ==0)
                     {
@@ -212,7 +213,7 @@ public class GameLogin extends JFrame {
             }
             else
             {
-                if (pValueString.equals(playerSaves[0].password))
+                if (pValueString.equals(playerSaves.get(0).password))
                 {
                     DisplayPlayerSaves();
                 }
@@ -296,7 +297,6 @@ public class GameLogin extends JFrame {
         ClearAllRadioButtons();
         DisableRadioButtons();
         ChangeStateOfControls(false);
-        numberOfPlayerSaves =0;
         username = "";
         password = "";
         playerSaves = null;
@@ -310,9 +310,13 @@ public class GameLogin extends JFrame {
     public void CreateNewGame()
     {
         int fileNumber;
-        int possibleFileNumbers[] = {1,2,3};
+        ArrayList<Integer> possibleFileNumbers = new ArrayList<Integer>();
         int count =0;
         Player newPlayer;
+        for (int i = 1;i < 4; i++)
+        {
+            possibleFileNumbers.add(i);
+        }
         if (numberOfPlayerSaves==0)
         {
             //here for making enw account
@@ -322,11 +326,11 @@ public class GameLogin extends JFrame {
             for (int i =0;i < numberOfPlayerSaves;i++)
             {
                 count =0;
-                while (count < possibleFileNumbers.length)
+                while (count < possibleFileNumbers.size())
                 {
-                    if (playerSaves[i].fileNumber == possibleFileNumbers[count])
+                    if (playerSaves.get(i).fileNumber == possibleFileNumbers.get(count))
                     {
-                        possibleFileNumbers = DungeonQuest.RemoveIntFromArray(possibleFileNumbers,count);
+                        possibleFileNumbers.remove((Integer) count);
                     }
                     else
                     {
@@ -335,16 +339,16 @@ public class GameLogin extends JFrame {
 
                 }
             }
-            if (possibleFileNumbers.length == 0)
+            if (possibleFileNumbers.isEmpty())
             {
                 JOptionPane.showMessageDialog(null,"You cannot have more than 3 player saves! Please delete one if you wish to make a new save.");
             }
             else
             {
-                fileNumber = possibleFileNumbers[0];
+                fileNumber = possibleFileNumbers.get(0);
                 newPlayer = new Player(txtUsername.getText(),fileNumber,password);
                 DisplaySave(newPlayer);
-                playerSaves = DungeonQuest.AddPlayerToArray(playerSaves,newPlayer);
+                playerSaves.add(newPlayer);
                 numberOfPlayerSaves++;
                 newPlayer.SavePlayer();
             }
@@ -381,7 +385,7 @@ public class GameLogin extends JFrame {
         }
         else
         {
-            fileToDelete = playerSaves[(saveNumber - 1)];
+            fileToDelete = playerSaves.get((saveNumber - 1));
             reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete save number " + saveNumber + "?", "", JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION)
             {
@@ -400,7 +404,7 @@ public class GameLogin extends JFrame {
         if (fileToDelete.delete())
         {
             JOptionPane.showMessageDialog(null,"File has been deleted!");
-            playerSaves = DungeonQuest.RemovePlayerFromArray(playerSaves,playerSave);
+            playerSaves.remove(playerSave);
             numberOfPlayerSaves--;
             DisplayPlayerSaves();
         }
@@ -410,7 +414,7 @@ public class GameLogin extends JFrame {
         ClearPlayerSaves();
         for (int i =0;i<numberOfPlayerSaves;i++)
         {
-            DisplaySave(playerSaves[i]);
+            DisplaySave(playerSaves.get(i));
         }
         ChangeStateOfControls(true);
     }

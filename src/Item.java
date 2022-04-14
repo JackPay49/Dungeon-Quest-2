@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Item extends Entity{
@@ -285,23 +286,27 @@ public class Item extends Entity{
         Random r = new Random();
         int randomNumber;
         Relic newRelic;
-        int[] possibleRelicNumbers = {0,1,2,3,4};
+        ArrayList<Integer> possibleRelicNumbers = new ArrayList<Integer>();
+        for (int i = 0;i < 5; i++)
+        {
+            possibleRelicNumbers.add(i);
+        }
         if (rewardType.equals("Relic"))
         {
             if (myPlayer.myRelics.size() != 5)
             {
                 for (int i=0;i< myPlayer.myRelics.size();i++)
                 {
-                    for (int j=0; j < possibleRelicNumbers.length;j++)
+                    for (int j=0; j < possibleRelicNumbers.size();j++)
                     {
-                        if (myPlayer.myRelics.get(i).toolID == possibleRelicNumbers[j])
+                        if (myPlayer.myRelics.get(i).toolID == possibleRelicNumbers.get(j))
                         {
-                            possibleRelicNumbers = DungeonQuest.RemoveIntFromArray(possibleRelicNumbers,j);
+                            possibleRelicNumbers.remove((Integer) j);
                         }
                     }
                 }
-                randomNumber = r.nextInt(possibleRelicNumbers.length);
-                newRelic = new Relic(possibleRelicNumbers[randomNumber],false);
+                randomNumber = r.nextInt(possibleRelicNumbers.size());
+                newRelic = new Relic(possibleRelicNumbers.get(randomNumber),false);
                 CinematicScreen CS = new CinematicScreen(GB,myPlayer,("Relic" + newRelic.toolID));
                 myPlayer.CollectNewRelic(newRelic);
             }

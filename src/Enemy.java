@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends Entity{
@@ -416,7 +417,7 @@ public class Enemy extends Entity{
     public void DoAllyCycle(GameBoard GB)
     {
         Boolean withinAttackZone;
-        Enemy enemiesInVision[] = new Enemy[0];
+        ArrayList<Enemy> enemiesInVision = new ArrayList<Enemy>();
         if (GB.enemies.size() > 0)
         {
             for (int i=0;i<GB.enemies.size();i++)
@@ -424,21 +425,21 @@ public class Enemy extends Entity{
                 FaceEntity(GB.enemies.get(i));
                 if (CheckIfCanSeeEntity(GB.enemies.get(i)))
                 {
-                    enemiesInVision = DungeonQuest.AddEnemyToArray(enemiesInVision,GB.enemies.get(i));
+                    enemiesInVision.add(GB.enemies.get(i));
                 }
             }
-            if (enemiesInVision.length > 0)
+            if (!enemiesInVision.isEmpty())
             {
-                withinAttackZone = CheckIfEntityWithinAttackZone(enemiesInVision[0]);
+                withinAttackZone = CheckIfEntityWithinAttackZone(enemiesInVision.get(0));
                 if (withinAttackZone ==true)
                 {
                     ChangeAppearance(1);
-                    GB.HurtEnemy(enemiesInVision[0],damage);
+                    GB.HurtEnemy(enemiesInVision.get(0),damage);
                     GB.skipRound = true;
                 }
                 else
                 {
-                    MoveTowardsEntity(enemiesInVision[0],GB);
+                    MoveTowardsEntity(enemiesInVision.get(0),GB);
                 }
 
             }
