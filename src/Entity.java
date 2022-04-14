@@ -14,8 +14,7 @@ import java.util.Set;
 public class Entity
 {
     String name;
-    String entityID;
-    char type;
+    EntityType type;
     String facing = "Right";
     int health;
     Boolean dead = false;
@@ -31,19 +30,19 @@ public class Entity
 
 
 
-    Entity(GameBoard GB, char tValue){//p player, e normal enemy, o projectile, x exit tile, i item
+    Entity(GameBoard GB, EntityType tValue){//p player, e normal enemy, o projectile, x exit tile, i item
         name = "entity";
         type = tValue;
         CreateIcon(GB);
         health =1;
         facing = "Right";
         SetAttackZone();
-        if ((type !='o') & (type !='i'))
+        if ((type != EntityType.PROJECTILE) & (type != EntityType.ITEM))
         {
             healthBar = new StatBar(GB,icon.getLocation(),health,health, "Health");
         }
     }
-    Entity(String nValue, char tValue, String fValue, int hValue,GameBoard GB)
+    Entity(String nValue, EntityType tValue, String fValue, int hValue,GameBoard GB)
     {
         name = nValue;
         type = tValue;
@@ -52,7 +51,7 @@ public class Entity
         health = hValue;
         ChangeAppearance(0);
         SetAttackZone();
-        if ((type !='o') & (type !='i'))
+        if ((type != EntityType.PROJECTILE) & (type != EntityType.ITEM))
         {
             healthBar = new StatBar(GB,icon.getLocation(),health,health, "Health");
         }
@@ -119,19 +118,19 @@ public class Entity
         String action = "";
         String entityFacing = facing;
         String imageFile;
-        if (type =='p')
+        if (type ==EntityType.PLAYER)
         {
             entity = "\\Hero";
         }
-        else if (type =='e')
+        else if (type ==EntityType.ENEMY)
         {
             entity = "\\Enemy\\e";
         }
-        else if (type =='o')
+        else if (type ==EntityType.PROJECTILE)
         {
             entity = "\\Projectile";
         }
-        else if (type =='x')
+        else if (type ==EntityType.EXIT)
         {
             entity = "\\ExitTile";
         }
@@ -174,19 +173,19 @@ public class Entity
         int numberOfSounds = 0;
         Random r = new Random();
         int randomNumber;
-        if (type =='p')
+        if (type ==EntityType.PLAYER)
         {
             entity = "\\Hero";
         }
-        else if (type =='e')
+        else if (type ==EntityType.ENEMY)
         {
-            entity = "\\Enemy\\e";
+            entity = "\\Enemy\\" + EntityType.ENEMY;
         }
-        else if (type =='b')
+        else if (type ==EntityType.BOSS)
         {
-            entity = "\\Enemy\\b";
+            entity = "\\Enemy\\" + EntityType.BOSS;
         }
-        else if (type=='o')
+        else if (type==EntityType.PROJECTILE)
         {
             entity = "\\Projectile";
         }
@@ -197,15 +196,15 @@ public class Entity
         else if (index == 1)
         {
             action = "\\Attacking";
-            if (type=='p')
+            if (type==EntityType.PLAYER)
             {
                 numberOfSounds = 3;
             }
-            else if (type=='o')
+            else if (type==EntityType.PROJECTILE)
             {
                 numberOfSounds =2;
             }
-            else if (type =='b')
+            else if (type ==EntityType.BOSS)
             {
                 numberOfSounds = 3;
             }
@@ -214,7 +213,7 @@ public class Entity
         else if (index == 2)
         {
             action = "\\Moving";
-            if (type=='o')
+            if (type==EntityType.PROJECTILE)
             {
                 numberOfSounds =1;
             }
@@ -223,7 +222,7 @@ public class Entity
         else if (index == 3)
         {
             action = "\\Hurt";
-            if (type=='p')
+            if (type==EntityType.PLAYER)
             {
                 numberOfSounds = 3;
             }
@@ -231,15 +230,15 @@ public class Entity
         else if (index == 4)
         {
             action = "\\Dying";
-            if (type=='p')
+            if (type==EntityType.PLAYER)
             {
                 numberOfSounds = 1;
             }
-            else if (type =='e')
+            else if (type ==EntityType.ENEMY)
             {
                 numberOfSounds =2;
             }
-            else if (type == 'b')
+            else if (type == EntityType.BOSS)
             {
                 numberOfSounds = 1;
             }
@@ -247,7 +246,7 @@ public class Entity
         else if (index == 5)
         {
             action = "\\Special";
-            if (type =='p')
+            if (type ==EntityType.PLAYER)
             {
                 numberOfSounds =1;
             }
@@ -321,23 +320,23 @@ public class Entity
         icon = tempLabel;
         icon.setBounds(GB.origin[0],GB.origin[1], (100 * iconXDimension), (100 * iconYDimension));
         icon.setVisible(true);
-        if (type =='p')
+        if (type ==EntityType.PLAYER)
         {
             GB.pane.add(icon,JLayeredPane.POPUP_LAYER);
         }
-        else if ((type =='e') | (type == 'b')) {
+        else if ((type ==EntityType.ENEMY) | (type == EntityType.BOSS)) {
             GB.pane.add(icon, JLayeredPane.PALETTE_LAYER);
         }
-        else if (type =='o')
+        else if (type ==EntityType.PROJECTILE)
         {
             GB.pane.add(icon,JLayeredPane.DRAG_LAYER);
 
         }
-        else if (type =='x')
+        else if (type ==EntityType.EXIT)
         {
             GB.pane.add(icon,JLayeredPane.MODAL_LAYER);
         }
-        else if (type =='i')
+        else if (type ==EntityType.ITEM)
         {
             GB.pane.add(icon,JLayeredPane.PALETTE_LAYER);
         }
@@ -354,7 +353,7 @@ public class Entity
         boolean validNewPosition;
         xPosition = (r.nextInt(GB.xDimension) * 100) + GB.origin[0];
         yPostion = (r.nextInt(GB.yDimension) * 100) + GB.origin[1];
-        if ((type == 'i') & (name.equals("Exit")))
+        if ((type == EntityType.ITEM) & (name.equals("Exit")))
         {
             xPosition = (((GB.xDimension -1) * 100) + GB.origin[0]);
         }
@@ -385,7 +384,7 @@ public class Entity
         }
         if (valid == true)
         {
-            if (type != 'o')
+            if (type != EntityType.PROJECTILE)
             {
                 if ((xPosition == GB.playerPosition.getX()) & (yPosition == GB.playerPosition.getY())) {
                     valid = false;

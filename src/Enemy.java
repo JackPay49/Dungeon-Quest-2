@@ -16,12 +16,12 @@ public class Enemy extends Entity{
     int animationCount = 0;
 
     Enemy(GameBoard GB, int difficultyLevel){
-        super(GB,'e');
+        super(GB,EntityType.ENEMY);
         DecideEnemyType(difficultyLevel);
         ChangeAppearance(0);
         RandomlyPlace(GB);
     }
-    Enemy(GameBoard GB, char tValue, int difficultyLevel)
+    Enemy(GameBoard GB, EntityType tValue, int difficultyLevel)
     {
         super(GB,tValue);
         DecideEnemyType(difficultyLevel);
@@ -53,18 +53,12 @@ public class Enemy extends Entity{
         String entityFacing = facing;
         String imageFile;
         if (animationCount <= 0) {
-            if (type == 'p') {
-                entity = "\\Hero";
-            } else if (type == 'e') {
-                entity = "\\Enemy\\e";
-            } else if (type == 'b') {
-                entity = "\\Enemy\\b";
-            } else if (type == 'o') {
-                entity = "\\Projectile";
-            } else if (type == 'x') {
-                entity = "\\ExitTile";
-            } else if (type == 'r') {
-                entity = "\\Enemy\\r";
+            if (type == EntityType.ENEMY) {
+                entity = "\\Enemy\\ENEMY";
+            } else if (type == EntityType.BOSS) {
+                entity = "\\Enemy\\BOSS";
+            }else if (type == EntityType.RANGEDENEMY) {
+                entity = "\\Enemy\\RANGEDENEMY";
             }
 
             if (index == 0) {
@@ -83,7 +77,7 @@ public class Enemy extends Entity{
             } else if (index == 5) {
                 action = "\\Stunned";
             } else if (index == 6) {
-                if (type == 'b') {
+                if (type == EntityType.BOSS) {
                     action = "\\SummoningEnemies";
                     animationCount = 1;
                 } else {
@@ -369,7 +363,7 @@ public class Enemy extends Entity{
                         GB.ChangeStateOfControls(false, eValue);
                         GB.skipRound = true;
                     } else {
-                        if (((onSameRow == true) | (onSameColumn == true)) & ((type == 'r') | (enemyType.equals("Mage")))) {
+                        if (((onSameRow == true) | (onSameColumn == true)) & ((type == EntityType.RANGEDENEMY) | (enemyType.equals("Mage")))) {
                             FireProjectile(GB, eValue);
                         } else {
                             if (randomNumber < 4) {
@@ -682,7 +676,7 @@ public class Enemy extends Entity{
         else if (randomNumber == 1)
         {
             enemyType = "Archer";
-            type = 'r';
+            type = EntityType.RANGEDENEMY;
         }
         else if (randomNumber ==2)
         {
@@ -691,7 +685,7 @@ public class Enemy extends Entity{
         else if (randomNumber == 3)
         {
             enemyType = "Warlock";
-            type = 'r';
+            type = EntityType.RANGEDENEMY;
         }
         else if (randomNumber == 4)
         {

@@ -33,8 +33,6 @@ public final class Player extends Entity {
 
     Relic currentRelic;
     ArrayList<Relic> myRelics = new ArrayList<Relic>();
-//    Relic myRelics[];
-//    int myRelics.size() = 0;
 
     int invulnerableCount = 0;
     StatBar bubble;
@@ -44,7 +42,7 @@ public final class Player extends Entity {
     boolean kingsoul = false;
 
     Player(GameBoard GB,String nValue, int fnValue){
-        super(GB,'p');
+        super(GB,EntityType.PLAYER);
         maxHealth =5;
         SetHealth(5);
         name = nValue;
@@ -491,7 +489,7 @@ public final class Player extends Entity {
         String action = "";
         String entityFacing = facing;
         String imageFile;
-        if (type =='p')
+        if (type ==EntityType.PLAYER)
         {
             entity = "\\Hero";
         }
@@ -563,7 +561,7 @@ public final class Player extends Entity {
         int attackIndex=0;
         int damage =0;
         int enemyHealth;
-        char entityType;
+        EntityType entityType;
         Item tempItem;
         Enemy tempEnemy;
         BlockBroken(false);
@@ -599,11 +597,11 @@ public final class Player extends Entity {
             }
             if ((GB.enemies.get(entityIndex).health - damage) <= 0)
             {
-                if (entityType =='e')
+                if (entityType ==EntityType.ENEMY)
                 {
                     IncreaseScore(25);
                 }
-                else if (entityType == 'b')
+                else if (entityType == EntityType.BOSS)
                 {
                     IncreaseScore(100);
                 }
@@ -627,7 +625,7 @@ public final class Player extends Entity {
             {
                 tempItem = (Item) GB.otherEntities.get(entityIndex);
                 entityType = tempItem.type;
-                if ((entityType == 'i') & ((tempItem.itemType.equals("Chest"))|(tempItem.itemType.equals("Trap"))))
+                if ((entityType == EntityType.ITEM) & ((tempItem.itemType.equals("Chest"))|(tempItem.itemType.equals("Trap"))))
                 {
                     tempItem.InteractWithItem(GB,this,true);
                 }

@@ -1,0 +1,3 @@
+public enum EntityType {
+    BOSS, ENEMY, RANGEDENEMY, PLAYER, PROJECTILE, ITEM, EXIT
+}

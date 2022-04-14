@@ -5,7 +5,7 @@ public class Boss extends Enemy{
 
     Boss(GameBoard GB,int difficultyLevel)
     {
-        super(GB,'b',difficultyLevel);
+        super(GB,EntityType.BOSS,difficultyLevel);
         ChangeAppearance(0);
 
     }
@@ -52,7 +52,7 @@ public class Boss extends Enemy{
         int numberOfSounds = 0;
         Random r = new Random();
         int randomNumber;
-        entity = "\\Enemy\\b";
+        entity = "\\Enemy\\BOSS";
 
         if (index == 0)
         {

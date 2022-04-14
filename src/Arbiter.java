@@ -262,24 +262,12 @@ public final class Arbiter extends Boss {
     public void ChangeAppearance(Integer index) //0 idle, 1 attacking, 2 moving, 3 hurt, 4 dead, 5 stunned, 6 Summoning enemies
     {
         ImageIcon tempIcon = new ImageIcon();
-        String entity = "";
+        String entity = "\\Enemy\\BOSS";
         String action = "";
         String entityFacing = facing;
         String imageFile;
         if (animationCount <= 0)
         {
-            if (type == 'p') {
-                entity = "\\Hero";
-            } else if (type == 'e') {
-                entity = "\\Enemy\\e";
-            } else if (type == 'b') {
-                entity = "\\Enemy\\b";
-            } else if (type == 'o') {
-                entity = "\\Projectile";
-            } else if (type == 'x') {
-                entity = "\\ExitTile";
-            }
-
             if (index == 0) {
                 action = "\\Idle";
             } else if (index == 1) {
@@ -314,28 +302,12 @@ public final class Arbiter extends Boss {
     @Override
     public void MakeSound(Integer index)//0 idle, 1 attacking, 2 moving, 3 hurt, 4 dead
     {
-        String entity = "";
+        String entity = "\\Enemy\\BOSS";
         String action = "";
         String audioFile;
         int numberOfSounds = 0;
         Random r = new Random();
         int randomNumber;
-        if (type =='p')
-        {
-            entity = "\\Hero";
-        }
-        else if (type =='e')
-        {
-            entity = "\\Enemy\\e";
-        }
-        else if (type =='b')
-        {
-            entity = "\\Enemy\\b";
-        }
-        else if (type=='o')
-        {
-            entity = "\\Projectile";
-        }
         if (index == 0)
         {
             action = "\\Idle";

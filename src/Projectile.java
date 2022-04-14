@@ -9,7 +9,7 @@ public final class Projectile extends Entity {
 
     Projectile(GameBoard GB, String fValue, String ptValue, Entity oValue, int dValue)
     {
-        super(GB,'o');
+        super(GB,EntityType.PROJECTILE);
         int xPosition = oValue.icon.getX();
         int yPosition = oValue.icon.getY();
         facing = fValue;
@@ -122,7 +122,7 @@ public final class Projectile extends Entity {
         }
         if (valid == true)
         {
-            if (type != 'o')
+            if (type != EntityType.PROJECTILE)
             {
                 if ((xPosition == GB.playerPosition.getX()) & (yPosition == GB.playerPosition.getY())) {
                     valid = false;
@@ -218,7 +218,7 @@ public final class Projectile extends Entity {
     }
     public void CheckPositionForEntities(GameBoard GB, Player myPlayer,Point newPosition)
     {
-        if ((owner.type =='p')|(owner.type == 'i'))
+        if ((owner.type ==EntityType.PLAYER)|(owner.type == EntityType.ITEM))
         {
             for (int i=0;i<GB.enemies.size();i++)
             {
@@ -231,7 +231,7 @@ public final class Projectile extends Entity {
                     this.icon.setLocation(newPosition);
                 }
             }
-            if (owner.type == 'i')
+            if (owner.type == EntityType.ITEM)
             {
                 if ((myPlayer.icon.getX() == newPosition.getX()) & (myPlayer.icon.getY() == newPosition.getY()))
                 {
@@ -257,7 +257,7 @@ public final class Projectile extends Entity {
     }
     public void AttackEntity(GameBoard GB, Entity eValue)
     {
-        if (eValue.type == 'p')
+        if (eValue.type == EntityType.PLAYER)
         {
             eValue.EntityHurt(damage);
         }
@@ -282,7 +282,7 @@ public final class Projectile extends Entity {
         int numberOfSounds = 0;
         Random r = new Random();
         int randomNumber;
-        if (type=='o')
+        if (type==EntityType.PROJECTILE)
         {
             entity = "\\Projectile";
         }

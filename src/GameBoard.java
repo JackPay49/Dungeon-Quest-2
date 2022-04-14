@@ -552,7 +552,7 @@ public class GameBoard extends JFrame {
     public void RemoveEnemy(int enemyNumber)//go from here, move each enemy down 1 place and then put it into a new array
     {
         Enemy enemyToRemove = enemies.get(enemyNumber);
-        if (enemyToRemove.type == 'e')
+        if (enemyToRemove.type == EntityType.ENEMY)
         {
             DropRandomPotion(enemyToRemove.icon.getLocation());
         }
@@ -791,7 +791,7 @@ public class GameBoard extends JFrame {
         for (int i =0;i< otherEntities.size();i++)
         {
             if (otherEntities.get(i).dead == false) {
-                if (otherEntities.get(i).type == 'i') {
+                if (otherEntities.get(i).type == EntityType.ITEM) {
                     if ((otherEntities.get(i).itemType.equals("Key"))|(otherEntities.get(i).itemType.equals("ChestKey"))|(otherEntities.get(i).itemType.equals("Potion"))) {
                         if ((playerPosition.getX() == otherEntities.get(i).icon.getX()) & (playerPosition.getY() == otherEntities.get(i).icon.getY())) {
                             myPlayer.InteractAction(this,true);

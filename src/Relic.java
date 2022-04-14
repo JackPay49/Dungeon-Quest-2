@@ -160,7 +160,7 @@ public final class Relic extends  Tool{
             {
                 if ((myPlayer.attackZone[j].getX() == GB.enemies.get(i).icon.getX()) & (myPlayer.attackZone[j].getY() == GB.enemies.get(i).icon.getY()))
                 {
-                    if ((GB.enemies.get(i).type == 'e')|(GB.enemies.get(i).type == 'r')) {
+                    if ((GB.enemies.get(i).type == EntityType.ENEMY)|(GB.enemies.get(i).type == EntityType.RANGEDENEMY)) {
                         enemyIndex = i;
                     }
                     else

@@ -11,7 +11,7 @@ public class Item extends Entity{
 
     Item(GameBoard GB, String itValue)
     {
-        super(GB,'i');
+        super(GB,EntityType.ITEM);
         facing = "Left";
         itemType = itValue;
         name = itValue;
