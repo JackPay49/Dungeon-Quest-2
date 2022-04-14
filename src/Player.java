@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Player extends Entity {
+public final class Player extends Entity {
     int score = 0;
     int level = 0;
 

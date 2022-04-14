@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class StatBar extends JProgressBar{
+public final class StatBar extends JProgressBar{
 
     int maxValue;
     int currentValue;

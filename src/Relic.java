@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Random;
 
-public class Relic extends  Tool{
+public final class Relic extends  Tool{
     boolean relic6Collected = false;
     boolean kingSoul = false;
 

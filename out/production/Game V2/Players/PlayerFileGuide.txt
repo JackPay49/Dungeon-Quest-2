@@ -16,16 +16,16 @@ current Relic number or -1
 max energy
 current energy
 number of swords
+//0
 //1
 //2
 //3
 //4
 //5
-//6
 damage or current sword id
 number of shields
+//0
 //1
 //2
-//3
 damage or current shield id
 

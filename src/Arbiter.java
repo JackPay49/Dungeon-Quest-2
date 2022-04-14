@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.Random;
 import java.util.spi.CurrencyNameProvider;
 
-public class Arbiter extends Boss {
+public final class Arbiter extends Boss {
     String spellCurrentlyCasting = "";//Teleport, Dying, etc
     int spellCount = -1;
 

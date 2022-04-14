@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Potion extends Item{
+public final class Potion extends Item{
     String potionType;//Health or Energy
 
     Potion(GameBoard GB,String ptValue)

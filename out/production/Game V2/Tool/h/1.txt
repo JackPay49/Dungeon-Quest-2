@@ -1,0 +1,3 @@
+Gladiator's Buckler
+A gloomy shield coated in cobwebs with a large razor sharp spike on its front.
+Blocking with this shield will inflict one point of damage to the enemy that attacks you.

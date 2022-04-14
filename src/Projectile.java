@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Projectile extends Entity {
+public final class Projectile extends Entity {
     int damage;
     Entity owner;
     String projectileType;

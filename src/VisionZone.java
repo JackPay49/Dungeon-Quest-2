@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class VisionZone {
+public final class VisionZone {
     int numberOfSpaces;
     Point zone[];
 

@@ -1,4 +1,4 @@
-public class Shield extends Tool{
+public final class Shield extends Tool{
     Shield(int shid) {
         super(shid,'h');
     }

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Trap extends Item{
+public final class Trap extends Item{
 
     String trapType = "";
 

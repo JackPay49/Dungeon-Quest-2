@@ -3,7 +3,7 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class Sword extends Tool{
+public final class Sword extends Tool{
     int damage;
 
     Sword(int sid)
@@ -29,11 +29,11 @@ public class Sword extends Tool{
 
         }
         symbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\w\\" + toolID + ".png"));
-        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory + "\\Tool\\w\\" + toolID + "Selected.png"));
+        selectedSymbol = new ImageIcon(Toolkit.getDefaultToolkit().getImage(DungeonQuest.directory  + "\\Tool\\w\\" + toolID + "Selected.png"));
     }
     public void UseSword(Player myPlayer,boolean killedEnemy)
     {
-        if (toolID == 4)
+        if (toolID == 3)
         {
             if (killedEnemy)
             {
