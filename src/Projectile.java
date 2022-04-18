@@ -140,7 +140,7 @@ public final class Projectile extends Entity {
         {
             for (int i =0;i<GB.allProjectiles.size();i++)
             {
-                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()))
+                if ((xPosition == GB.allProjectiles.get(i).icon.getX()) & (yPosition == GB.allProjectiles.get(i).icon.getY()) & (GB.allProjectiles.get(i).dead == false))
                 {
                     valid = false;
                 }
@@ -157,7 +157,7 @@ public final class Projectile extends Entity {
                 }
             }
         }
-        if (valid ==true)
+        if ((valid ==true) && (GB.levelNumber != 120))
         {
             for (int i =0;i<GB.allTakenPoints.size();i++)
             {
@@ -172,6 +172,7 @@ public final class Projectile extends Entity {
             if ((xPosition == GB.exitTile.icon.getX()) & (yPosition == GB.exitTile.icon.getY()))
             {
                 valid = false;
+                System.out.println("Exit tile");
             }
         }
 
