@@ -622,6 +622,7 @@ public class GameBoard extends JFrame {
         {
             if (allProjectiles.get(i).dead == true)
             {
+                allProjectiles.get(i).icon.setVisible(false);
                 allProjectiles.remove(i);
             }
             else
@@ -652,7 +653,7 @@ public class GameBoard extends JFrame {
                 }
                 else
                 {
-                    currentEnemy.EntityHurt(currentEnemy.health);
+                    currentEnemy.EntityHurt(null,currentEnemy.health);
                 }
 
             } else
@@ -664,7 +665,7 @@ public class GameBoard extends JFrame {
                 }
                 else
                 {
-                    currentEnemy.EntityHurt(amount);
+                    currentEnemy.EntityHurt(this,amount);
                 }
 
             }
@@ -688,29 +689,14 @@ public class GameBoard extends JFrame {
     {
         Enemy currentAlly = allies.get(allyIndex);
         if (currentAlly.health < amount) {
-            currentAlly.EntityHurt(currentAlly.health);
+            currentAlly.EntityHurt(null,currentAlly.health);
         } else {
             for (int i = 0; i < amount; i++) {
-                currentAlly.EntityHurt(1);
+                currentAlly.EntityHurt(null,1);
             }
         }
         if (currentAlly.dead == true) {
             allies.remove(currentAlly);
-        }
-    }
-
-    public void HurtItem(int itemIndex,int amount)
-    {
-        Item currentItem = otherEntities.get(itemIndex);
-        if (currentItem.health < amount) {
-            currentItem.EntityHurt(currentItem.health);
-        } else {
-            for (int i = 0; i < amount; i++) {
-                currentItem.EntityHurt(1);
-            }
-        }
-        if (currentItem.dead == true) {
-            otherEntities.remove(currentItem);
         }
     }
     public void CheckIfWon(Player myPlayer)

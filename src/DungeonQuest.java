@@ -127,7 +127,7 @@ public class DungeonQuest {
                     GB.allies.get(i).DoAllyCycle(GB);
                 }
             }
-            modCycle =cycleNumber%5;
+            modCycle =cycleNumber%2;
             if (modCycle == 0)
             {
                 GB.EnsureDeadEnemiesHidden();

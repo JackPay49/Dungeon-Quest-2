@@ -33,10 +33,10 @@ public class Boss extends Enemy{
         LoadEnemyTypeInfo(difficultyLevel);
     }
     @Override
-    public void AttackEntity(Entity eValue)
+    public void AttackEntity(GameBoard GB,Entity eValue)
     {
         ChangeAppearance(1);
-        eValue.EntityHurt(damage);
+        eValue.EntityHurt(GB,damage);
         if (enemyType.equals("Druid"))
         {
             IncreaseHealth();

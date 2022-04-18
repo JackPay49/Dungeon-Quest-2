@@ -359,7 +359,7 @@ public class Enemy extends Entity{
                 FaceEntity(eValue);
                 if (canSeeEntity == true) {
                     if (withinAttackZone == true) {
-                        AttackEntity(eValue);
+                        AttackEntity(GB,eValue);
                         GB.ChangeStateOfControls(false, eValue);
                         GB.skipRound = true;
                     } else {
@@ -383,7 +383,7 @@ public class Enemy extends Entity{
                         FaceEntity(eValue);
                         if (canSeeEntity == true) {
                             if (withinAttackZone == true) {
-                                AttackEntity(eValue);
+                                AttackEntity(GB,eValue);
                                 GB.HurtAlly(0, damage);
                                 GB.skipRound = true;
 
@@ -481,10 +481,10 @@ public class Enemy extends Entity{
             GB.enemies.add(newEnemy);
         }
     }
-    public void AttackEntity(Entity eValue)
+    public void AttackEntity(GameBoard GB,Entity eValue)
     {
         ChangeAppearance(1);
-        eValue.EntityHurt(damage);
+        eValue.EntityHurt(GB,damage);
     }
     public void MoveTowardsEntity(Entity eValue, GameBoard GB)
     {

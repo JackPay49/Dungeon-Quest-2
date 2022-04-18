@@ -42,20 +42,6 @@ public class Entity
             healthBar = new StatBar(GB,icon.getLocation(),health,health, "Health");
         }
     }
-    Entity(String nValue, EntityType tValue, String fValue, int hValue,GameBoard GB)
-    {
-        name = nValue;
-        type = tValue;
-        CreateIcon(GB);
-        facing = fValue;
-        health = hValue;
-        ChangeAppearance(0);
-        SetAttackZone();
-        if ((type != EntityType.PROJECTILE) & (type != EntityType.ITEM))
-        {
-            healthBar = new StatBar(GB,icon.getLocation(),health,health, "Health");
-        }
-    }
     Entity(String nValue)
     {
         name = nValue;
@@ -315,7 +301,7 @@ public class Entity
 
     public void CreateIcon(GameBoard GB)
     {
-        Image playerIcon = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BasicBoard.png"));
+        Image playerIcon = Toolkit.getDefaultToolkit().getImage((DungeonQuest.directory + "\\GameBoard\\BasicBoard.png")).getScaledInstance(1, 1, Image.SCALE_DEFAULT);
         JLabel tempLabel = new JLabel(new ImageIcon(playerIcon));
         icon = tempLabel;
         icon.setBounds(GB.origin[0],GB.origin[1], (100 * iconXDimension), (100 * iconYDimension));
@@ -512,7 +498,7 @@ public class Entity
         healthBar.UpdateStatBar(health);
     }
 
-    public void EntityHurt(int amount)
+    public void EntityHurt(GameBoard GB,int amount)
     {
         for (int i =0; i <amount;i++)
         {

@@ -259,7 +259,7 @@ public final class Projectile extends Entity {
     {
         if (eValue.type == EntityType.PLAYER)
         {
-            eValue.EntityHurt(damage);
+            eValue.EntityHurt(null,damage);
         }
         else
         {

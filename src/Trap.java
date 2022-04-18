@@ -87,7 +87,7 @@ public final class Trap extends Item{
         UpdateLabelLocations();
     }
     @Override
-    public void EntityHurt(int amount)
+    public void EntityHurt(GameBoard GB,int amount)
     {
         for (int i =0; i <amount;i++)
         {

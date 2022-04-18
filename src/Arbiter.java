@@ -20,11 +20,12 @@ public final class Arbiter extends Boss {
         LoadEnemyTypeInfo(difficultyLevel);
     }
     @Override
-    public void AttackEntity(Entity eValue)
+    public void AttackEntity(GameBoard GB,Entity eValue)
     {
         ChangeAppearance(1);
-        eValue.EntityHurt(damage);
+        eValue.EntityHurt(GB,damage);
     }
+    @Override
     public void EntityHurt(GameBoard GB,int amount)
     {
         Random r = new Random();
@@ -187,7 +188,7 @@ public final class Arbiter extends Boss {
                     FaceEntity(eValue);
                     if (canSeeEntity == true) {
                         if (withinAttackZone == true) {
-                            AttackEntity(eValue);
+                            AttackEntity(GB,eValue);
                             GB.ChangeStateOfControls(false, eValue);
                             GB.skipRound = true;
                         } else {
@@ -205,7 +206,7 @@ public final class Arbiter extends Boss {
                             FaceEntity(eValue);
                             if (canSeeEntity == true) {
                                 if (withinAttackZone == true) {
-                                    AttackEntity(eValue);
+                                    AttackEntity(GB,eValue);
                                     GB.HurtAlly(0, damage);
                                     GB.skipRound = true;
 

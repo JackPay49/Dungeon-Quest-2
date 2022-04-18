@@ -347,12 +347,11 @@ public final class Player extends Entity {
         }
         return valid;
     }
-    @Override
-    public void EntityHurt(int amount)
+    public void EntityHurt(GameBoard GB,int amount)
     {
         if (blocking)
         {
-            BlockBroken(true);
+            BlockBroken(GB,true);
         }
         else
         {
@@ -546,7 +545,7 @@ public final class Player extends Entity {
     @Override
     public void MoveEntity(GameBoard GB, String direction)
     {
-        BlockBroken(false);
+        BlockBroken(null,false);
         super.MoveEntity(GB, direction);
     }
     public void BlockAction(GameBoard GB)
@@ -564,7 +563,7 @@ public final class Player extends Entity {
         EntityType entityType;
         Item tempItem;
         Enemy tempEnemy;
-        BlockBroken(false);
+        BlockBroken(null,false);
         if (attackType.equals("Normal"))
         {
             attackIndex = 1;
@@ -772,14 +771,14 @@ public final class Player extends Entity {
             }
         }
     }
-    public void BlockBroken(boolean successful)
+    public void BlockBroken(GameBoard GB,boolean successful)
     {
         blocking = false;
         healthBar.ChangeColour("Red");
         if (successful)
         {
             ChangeAppearance(8);
-            currentShield.UseShield(this);
+            currentShield.UseShield(GB,this);
         }
     }
 

@@ -2,16 +2,20 @@ public final class Shield extends Tool{
     Shield(int shid) {
         super(shid,'h');
     }
-    public void UseShield(Player myPlayer)
+    public void UseShield(GameBoard GB,Player myPlayer)
     {
-        if (toolID ==0)
-        {
-        }
+        int enemyIndex;
         if (toolID ==1)
         {
+            if (GB != null)
+            {
+                enemyIndex = GB.CheckForEnemies(myPlayer);
+                GB.HurtEnemy(GB.enemies.get(enemyIndex),1);
+            }
         }
-        if (toolID ==2)
+        else if (toolID ==2)
         {
+
         }
     }
 }
